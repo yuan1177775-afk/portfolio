@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="圆子｜AI 产品经理作品集">
+  <title>圆子 · AI Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home">
+      <strong>圆子</strong>
+      <span>SiYuan · Gao</span>
+    </a>
+    <nav aria-label="主导航">
+      <a href="#about">关于</a>
+      <a href="#work">项目</a>
+      <a href="#insights">思考</a>
+      <a href="#contact">联系我</a>
+    </nav>
+    <div class="header-actions">
+      <a href="https://github.com/yuan1177775-afk" target="_blank" rel="noreferrer">GitHub <i>↗</i></a>
+      <a href="#" data-resume-placeholder>简历 PDF <i>↓</i></a>
+    </div>
+    <button class="menu-button" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <canvas class="watercolor-world" id="watercolor-world" aria-hidden="true"></canvas>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy reveal">
+        <p class="section-mark">AI PRODUCT MANAGER · PORTFOLIO 2026</p>
+        <h1>圆子</h1>
+        <p class="hero-statement">让想法生长，<br>让技术抵达真实的人。</p>
+        <p class="body-copy hero-summary">我是一名 AI 产品经理。这里记录我的产品项目、AI 实验与行业思考，探索模型能力如何转化为真实、清晰且可持续的用户价值。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">查看项目</a>
+          <a class="button button-secondary" href="#about">关于我</a>
+          <button class="button button-ai" type="button" data-open-ai>和我的 AI 分身聊聊</button>
+          <a class="button button-text" href="#" data-resume-placeholder>下载简历 ↓</a>
+        </div>
+        <a class="scroll-link" href="#about">向下浏览 <span>↓</span></a>
+      </div>
+    </section>
+
+    <section class="about section" id="about">
+      <div class="content-panel about-panel reveal">
+        <p class="section-mark">01 · ABOUT</p>
+        <h2>关于我</h2>
+        <div class="about-body">
+          <p>你好，我是圆子，一名专注于 AI 应用落地的产品经理。</p>
+          <p>我习惯从用户问题出发，拆解业务场景、识别关键需求，并将模型能力转化为清晰、可验证的产品方案。</p>
+          <p>我关注的不只是“AI 能不能实现”，也关注它是否真正解决问题、是否值得用户使用，以及如何在技术能力、产品体验和业务价值之间建立平衡。</p>
+        </div>
+        <div class="principles">
+          <article>
+            <span>01</span>
+            <h3>好奇</h3>
+            <p>理解问题，而不是只接受需求。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>判断</h3>
+            <p>在技术可能性中寻找真正值得做的方向。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>落地</h3>
+            <p>把模糊的想法，推进为可验证的产品结果。</p>
+          </article>
+        </div>
+        <button class="about-ai-link" type="button" data-open-ai data-ai-question="为什么她适合 AI 产品经理岗位？">
+          <span>🌱</span> 还有问题？问问我的 AI 分身 →
+        </button>
+      </div>
+    </section>
+
+    <section class="work section clean-section" id="work">
+      <div class="section-heading reveal">
+        <p class="section-mark">02 · SELECTED WORK</p>
+        <h2>精选项目</h2>
+        <p class="section-claim">从问题出发，<br>让方案走向真实场景。</p>
+        <p class="body-copy">这里收录我参与和主导的 AI 产品项目，记录从需求发现、方案设计到验证迭代的完整过程。</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card reveal">
+          <div class="project-cover cover-education">
+            <span class="cover-index">CASE 01</span>
+            <div class="cover-window">
+              <i></i><i></i><i></i>
+              <strong>AI ADVISOR</strong>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>AI 产品项目</span><time>时间待补充</time></div>
+            <h3>考研择校择专业 AI 顾问</h3>
+            <p>基于用户背景与院校数据，为考研用户提供个性化择校建议。</p>
+            <ul class="project-tags">
+              <li>AI 产品设计</li><li>RAG</li><li>用户决策</li><li>教育科技</li>
+            </ul>
+            <div class="project-footer">
+              <span>角色：AI 产品经理</span>
+              <a href="projects/graduate-ai-advisor.html" aria-label="查看考研 AI 顾问项目案例">查看案例 →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-cover cover-knowledge">
+            <span class="cover-index">CASE 02</span>
+            <div class="cover-orbit"><i></i><i></i><i></i></div>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>AI 产品项目</span><time>整理中</time></div>
+            <h3>下一份项目案例</h3>
+            <p>这里将展示项目背景、核心问题、产品方案与验证过程。</p>
+            <ul class="project-tags">
+              <li>需求分析</li><li>方案设计</li><li>原型验证</li>
+            </ul>
+            <div class="project-footer">
+              <span>角色：待补充</span>
+              <a href="#" aria-label="项目案例整理中">案例整理中</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-cover cover-lab">
+            <span class="cover-index">CASE 03</span>
+            <div class="cover-grid"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>AI Demo</span><time>Vibe Coding</time></div>
+            <h3>馕途 · 新疆深度旅行规划</h3>
+            <p>一站式新疆旅行规划原型，涵盖路线推荐、景点攻略、美食住宿与季节玩法，用 vibe coding 快速验证 AI 旅行助手体验。</p>
+            <ul class="project-tags">
+              <li>AI 原型</li><li>旅行规划</li><li>交互 Demo</li>
+            </ul>
+            <div class="project-footer">
+              <span>角色：独立探索</span>
+              <a href="demos/nantu/" target="_blank" rel="noreferrer">体验 Demo →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="insights section" id="insights">
+      <div class="content-panel insights-panel">
+        <div class="section-heading reveal">
+          <p class="section-mark">03 · INSIGHTS &amp; EXPERIMENTS</p>
+          <h2>思考与实验</h2>
+          <p class="section-claim">正在生长的想法</p>
+          <p class="body-copy">有些内容已经成为产品，有些仍在验证。这里记录尚未完成的思考、实验与阶段性答案。</p>
+        </div>
+
+        <div class="insights-tabs reveal" role="tablist" aria-label="思考与实验分类">
+          <button class="insights-tab active" type="button" role="tab" aria-selected="true" data-tab="articles">产品文章</button>
+          <button class="insights-tab" type="button" role="tab" aria-selected="false" data-tab="notes">学习笔记</button>
+          <button class="insights-tab" type="button" role="tab" aria-selected="false" data-tab="reviews">项目复盘</button>
+        </div>
+
+        <div class="insights-panels reveal">
+          <div class="insights-list-panel active" data-panel="articles" role="tabpanel">
+            <ul class="insights-list">
+              <li>
+                <a class="insight-row" href="articles/ai-pm-four-jobs.html">
+                  <span class="insight-date">2026</span>
+                  <span class="insight-copy">
+                    <strong>从准确率到任务完成率：AI 时代，产品经理已经换了四份工作</strong>
+                    <em>重新理解 AI 产品经理在模型、交互、评测与业务之间承担的工作。</em>
+                  </span>
+                  <i aria-hidden="true">→</i>
+                </a>
+              </li>
+              <li>
+                <a class="insight-row" href="articles/traditional-pm-to-ai-pm.html">
+                  <span class="insight-date">2026</span>
+                  <span class="insight-copy">
+                    <strong>传统 PM 转型 AI PM，最难的不是技术，而是接受产品会"失控"</strong>
+                    <em>拆解传统 PM 与 AI PM 在控制方式、质量标准和产出物上的核心差异。</em>
+                  </span>
+                  <i aria-hidden="true">→</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="insights-list-panel" data-panel="notes" role="tabpanel" hidden>
+            <ul class="insights-list">
+              <li>
+                <a class="insight-row" href="articles/transformer-llm-principles.html">
+                  <span class="insight-date">2026</span>
+                  <span class="insight-copy">
+                    <strong>大模型根本不懂你：产品经理必须看懂的 Transformer 底层逻辑</strong>
+                    <em>分清「会说话」和「懂事实」，理解 Token、上下文与 Attention 的产品含义。</em>
+                  </span>
+                  <i aria-hidden="true">→</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="insights-list-panel" data-panel="reviews" role="tabpanel" hidden>
+            <ul class="insights-list">
+              <li>
+                <div class="insight-row insight-row--placeholder">
+                  <span class="insight-date">待更新</span>
+                  <span class="insight-copy">
+                    <strong>从 Demo 到产品，中间还缺什么</strong>
+                    <em>记录早期验证走向真实产品时容易被忽略的问题。</em>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section clean-section" id="contact">
+      <div class="contact-heading reveal">
+        <p class="section-mark">04 · CONTACT</p>
+        <h2>联系我</h2>
+        <p class="section-claim">期待与你一起，<br>做些真正有价值的事。</p>
+        <p class="body-copy">我目前关注 AI 产品经理及 AI 应用产品相关机会，也欢迎关于产品实践与 AI 应用落地的交流。</p>
+      </div>
+      <div class="contact-list reveal">
+        <a class="contact-email" href="mailto:yuan1177775@gmail.com">
+          <span>关于联系</span>
+          <strong>yuan1177775@gmail.com</strong>
+          <i>↗</i>
+        </a>
+        <article>
+          <span>项目合作</span>
+          <strong>AI 产品设计、原型验证与应用落地。</strong>
+        </article>
+        <article>
+          <span>内容交流</span>
+          <strong>产品思考、行业观察与实践经验分享。</strong>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#home"><strong>圆子</strong><span>SiYuan · Gao</span></a>
+    <p>AI PRODUCT MANAGER · PORTFOLIO 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="chatbot.js" data-base=""></script>
+</body>
+</html>

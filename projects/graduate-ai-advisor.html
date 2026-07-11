@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="考研择校择专业 AI 顾问项目案例">
+  <title>考研择校择专业 AI 顾问 · 圆子</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../chatbot.css">
+  <style>
+    .case-page { max-width: 1120px; margin: 0 auto; padding: 125px 32px 100px; }
+    .case-back { color: var(--soft); font-size: 13px; text-decoration: none; }
+    .case-hero { margin-top: 55px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 70px; align-items: center; }
+    .case-kicker { color: var(--green); font-size: 13px; font-weight: 600; letter-spacing: .16em; }
+    .case-hero h1 { margin: 20px 0; font-size: clamp(42px, 5vw, 70px); line-height: 1.28; }
+    .case-lead { color: var(--body); font-family: var(--serif); font-size: 18px; line-height: 2; }
+    .case-cover { min-height: 430px; padding: 35px; display: grid; place-items: center; background: linear-gradient(145deg, #dbe5d1, #f3eee1 62%, #d9cbb5); }
+    .case-cover-inner { width: 72%; padding: 35px; background: rgba(255,255,255,.65); border: 1px solid rgba(52,75,56,.2); box-shadow: 18px 20px 0 rgba(94,118,86,.12); }
+    .case-cover-inner span { color: var(--green); font-size: 11px; letter-spacing: .15em; }
+    .case-cover-inner strong { display: block; margin-top: 60px; color: var(--green-dark); font-family: var(--serif); font-size: 28px; }
+    .case-facts { margin: 80px 0; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .case-facts div { padding: 25px 20px 25px 0; }
+    .case-facts div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+    .case-facts span { color: var(--soft); font-size: 12px; }
+    .case-facts strong { display: block; margin-top: 8px; color: var(--body); font-family: var(--serif); font-size: 16px; font-weight: 500; }
+    .case-section { max-width: 760px; margin: 70px auto; }
+    .case-section h2 { font-size: 38px; }
+    .case-section p { color: var(--body); font-family: var(--serif); font-size: 17px; line-height: 2; }
+    .case-note { padding: 24px; background: rgba(95,118,89,.08); border-left: 2px solid var(--green); }
+    .case-ask { margin-top: 90px; padding: 42px; background: #eef0e8; }
+    .case-ask h2 { margin: 0; font-size: 30px; }
+    .case-ask p { color: var(--body); }
+    .case-ask-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .case-ask button { padding: 10px 14px; border: 1px solid rgba(52,75,56,.22); color: var(--green-dark); background: rgba(255,255,255,.7); cursor: pointer; }
+    @media(max-width:760px) {
+      .case-page { padding: 105px 22px 70px; }
+      .case-hero { grid-template-columns: 1fr; gap: 35px; }
+      .case-cover { min-height: 300px; }
+      .case-facts { grid-template-columns: 1fr 1fr; }
+      .case-facts div:nth-child(3) { border-left: 0; }
+      .case-ask { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="case-page">
+    <a class="case-back" href="../index.html#work">← 返回精选项目</a>
+    <section class="case-hero">
+      <div>
+        <p class="case-kicker">CASE 01 · AI PRODUCT</p>
+        <h1>考研择校择专业 AI 顾问</h1>
+        <p class="case-lead">基于用户背景与院校数据，为考研用户提供个性化择校建议。</p>
+      </div>
+      <div class="case-cover">
+        <div class="case-cover-inner">
+          <span>AI PRODUCT CASE</span>
+          <strong>AI ADVISOR</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-facts">
+      <div><span>项目类型</span><strong>AI 产品项目</strong></div>
+      <div><span>我的角色</span><strong>AI 产品经理</strong></div>
+      <div><span>项目时间</span><strong>待补充</strong></div>
+      <div><span>核心标签</span><strong>RAG · 用户决策</strong></div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-mark">PROJECT OVERVIEW</p>
+      <h2>项目概述</h2>
+      <p>该项目关注考研用户在择校与择专业过程中面临的信息分散、比较维度复杂和个体差异明显等问题，尝试结合用户背景与院校数据提供更清晰的决策辅助。</p>
+      <p class="case-note">当前页面仅展示已经确认的公开信息。具体调研过程、RAG 方案、产品流程和验证结果将在案例整理完成后补充，避免在信息不足时虚构项目细节。</p>
+    </section>
+
+    <section class="case-ask">
+      <h2>关于这个项目，你还可以问</h2>
+      <p>AI 向导会基于当前已经公开的项目信息回答，并明确区分事实与待补充内容。</p>
+      <div class="case-ask-buttons">
+        <button type="button" data-open-ai data-ai-question="她在这个项目中具体负责什么？">她具体负责什么？</button>
+        <button type="button" data-open-ai data-ai-question="她如何使用 RAG？">RAG 如何使用？</button>
+        <button type="button" data-open-ai data-ai-question="这个项目解决了什么问题？">项目解决什么问题？</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../chatbot.js" data-base="../"></script>
+</body>
+</html>

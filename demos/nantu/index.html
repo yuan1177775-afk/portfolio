@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#1A4A3A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="馕途"/>
+<title>馕途 · 新疆深度旅行规划</title>
+<style>
+:root{--green:#1A4A3A;--green-mid:#245C48;--gold:#C9922A;--gold-light:#E8B84B;--pom:#B83232;--pom-light:#D94545;--cream:#FAF6EE;--cream-2:#F2EBD9;--cream-3:#E8DEC8;--ink:#1C1410;--ink-mid:#4A3B2E;--ink-soft:#8C7A65;--line:rgba(28,20,16,.1);--line-2:rgba(28,20,16,.06);--sidebar:224px;--r:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.shell{display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:var(--sidebar);flex:0 0 var(--sidebar);background:var(--green);display:flex;flex-direction:column;position:relative;overflow:hidden;z-index:10;}
+.sidebar::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'%3E%3Cpolygon points='30,4 56,30 30,56 4,30'/%3E%3Crect x='12' y='12' width='36' height='36'/%3E%3C/g%3E%3C/svg%3E");background-size:60px 60px;}
+.sb-brand{padding:22px 20px 16px;position:relative;}
+.sb-brand .name{font-family:"Noto Serif SC",serif;font-weight:700;font-size:24px;color:#FAF6EE;letter-spacing:2px;}
+.sb-brand .sub{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:3px;color:var(--gold-light);text-transform:uppercase;margin-top:3px;}
+.sb-brand .tagline{font-size:11px;color:rgba(250,246,238,.42);margin-top:5px;line-height:1.5;}
+.sb-divider{height:1px;background:rgba(255,255,255,.1);margin:0 20px;}
+.sb-nav{padding:10px 0;flex:1;position:relative;}
+.sb-nav button{display:flex;align-items:center;gap:9px;width:100%;padding:10px 20px;background:none;border:none;cursor:pointer;font-family:inherit;color:rgba(250,246,238,.58);font-size:12.5px;transition:.15s;position:relative;text-align:left;}
+.sb-nav button .ico{font-size:15px;width:19px;text-align:center;}
+.sb-nav button:hover{color:#FAF6EE;background:rgba(255,255,255,.06);}
+.sb-nav button.on{color:#FAF6EE;background:rgba(255,255,255,.11);}
+.sb-nav button.on::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;background:var(--gold);border-radius:0 3px 3px 0;}
+.sb-season{padding:12px 20px 14px;position:relative;}
+.sb-season .lab{font-size:9px;letter-spacing:2px;color:rgba(250,246,238,.38);text-transform:uppercase;margin-bottom:7px;}
+.season-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.season-pill{font-size:10.5px;padding:4px 9px;border-radius:20px;cursor:pointer;border:1px solid rgba(255,255,255,.14);color:rgba(250,246,238,.58);background:transparent;transition:.15s;font-family:inherit;}
+.season-pill:hover{border-color:var(--gold);color:var(--gold-light);}
+.season-pill.on{background:var(--gold);border-color:var(--gold);color:var(--green);font-weight:600;}
+.sb-weather{margin:0 14px 16px;padding:10px 12px;background:rgba(0,0,0,.14);border-radius:9px;border:1px solid rgba(255,255,255,.07);position:relative;}
+.sb-weather .wc{display:flex;align-items:center;justify-content:space-between;}
+.sb-weather .city{font-size:10.5px;color:rgba(250,246,238,.48);}
+.sb-weather .temp{font-family:"DM Mono",monospace;font-size:19px;color:#FAF6EE;}
+.sb-weather .desc{font-size:10px;color:rgba(250,246,238,.38);margin-top:2px;}
+.sb-weather .warn{margin-top:6px;padding:5px 7px;background:rgba(201,146,42,.14);border-radius:5px;border-left:2px solid var(--gold);font-size:10px;color:var(--gold-light);line-height:1.45;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{padding:0 26px;height:50px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(250,246,238,.96);backdrop-filter:blur(8px);flex:0 0 50px;}
+.tb-left{display:flex;align-items:center;gap:9px;}
+.tb-title{font-family:"Noto Serif SC",serif;font-weight:700;font-size:15.5px;}
+.tb-sub{font-size:11px;color:var(--ink-soft);}
+.tb-right{display:flex;align-items:center;gap:7px;}
+.btn{padding:6px 13px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:.15s;}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink-mid);}
+.btn-ghost:hover{border-color:var(--green);color:var(--green);}
+.btn-primary{background:var(--green);color:#FAF6EE;}
+.btn-primary:hover{background:var(--green-mid);}
+.content{flex:1;overflow-y:auto;padding:22px 26px 40px;}
+.content::-webkit-scrollbar{width:5px;}
+.content::-webkit-scrollbar-thumb{background:var(--cream-3);border-radius:3px;}
+.screen{display:none;}
+.screen.active{display:block;animation:fu .26s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:none;}}
+.GEO{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'%3E%3Cpolygon points='30,4 56,30 30,56 4,30'/%3E%3Crect x='12' y='12' width='36' height='36'/%3E%3C/g%3E%3C/svg%3E");background-size:60px 60px;}
+
+/* DISCOVER */
+.discover-hero{background-color:var(--green);background-image:linear-gradient(90deg,rgba(15,43,34,.9) 0%,rgba(15,43,34,.66) 50%,rgba(15,43,34,.18) 100%),url('assets/xinjiang-hero.jpg');background-size:cover;background-position:center 54%;border-radius:14px;padding:34px 32px;margin-bottom:22px;position:relative;overflow:hidden;color:#FAF6EE;box-shadow:0 16px 34px -24px rgba(15,43,34,.72);}
+.discover-hero::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.055)' stroke-width='1.2'%3E%3Cpolygon points='40,5 75,40 40,75 5,40'/%3E%3Crect x='15' y='15' width='50' height='50'/%3E%3C/g%3E%3C/svg%3E");background-size:80px 80px;}
+.dh-ey{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);position:relative;}
+.dh-h1{font-family:"Noto Serif SC",serif;font-weight:700;font-size:32px;margin:7px 0 5px;letter-spacing:1px;position:relative;}
+.dh-h1 span{color:#F29090;}
+.dh-p{font-size:12.5px;line-height:1.7;color:rgba(250,246,238,.68);max-width:50ch;position:relative;}
+.dh-hint{margin-top:14px;position:relative;font-size:11px;color:rgba(250,246,238,.45);display:flex;align-items:center;gap:6px;}
+.season-tabs{display:flex;gap:9px;margin-bottom:18px;}
+.stab{flex:1;padding:11px 12px;border-radius:var(--r);border:1.5px solid var(--line);background:white;cursor:pointer;font-family:inherit;transition:.15s;text-align:left;}
+.stab:hover{border-color:var(--green);transform:translateY(-1px);}
+.stab.on{border-color:var(--green);background:var(--green);color:#FAF6EE;}
+.stab .sico{font-size:17px;margin-bottom:4px;}
+.stab .sname{font-family:"Noto Serif SC",serif;font-weight:700;font-size:13.5px;}
+.stab .sdesc{font-size:10.5px;margin-top:2px;opacity:.58;}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:13px;}
+.sec-header .t{font-family:"Noto Serif SC",serif;font-weight:700;font-size:17px;}
+.sec-header .t small{display:block;font-family:"DM Mono",monospace;font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-top:2px;}
+.sec-header .hint{font-size:11px;color:var(--ink-soft);}
+.route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.route-card{background:white;border-radius:var(--r);border:1px solid var(--line-2);overflow:hidden;cursor:pointer;transition:.15s;box-shadow:0 2px 9px -5px rgba(28,20,16,.14);}
+.route-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px -7px rgba(28,20,16,.2);}
+.rc-cap{height:132px;position:relative;display:flex;align-items:flex-end;padding:11px 12px;overflow:hidden;background-size:cover!important;background-position:center!important;}
+.rc-cap::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='55' height='55'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'%3E%3Cpolygon points='27,3 52,27 27,52 3,27'/%3E%3Crect x='11' y='11' width='34' height='34'/%3E%3C/g%3E%3C/svg%3E");background-size:55px 55px;}
+.rc-days{position:relative;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:3px 8px;font-family:"DM Mono",monospace;font-size:9.5px;color:#FAF6EE;}
+.rc-body{padding:11px 13px 13px;}
+.rc-name{font-family:"Noto Serif SC",serif;font-weight:700;font-size:14.5px;margin-bottom:3px;}
+.rc-route{font-size:11px;color:var(--ink-soft);margin-bottom:8px;line-height:1.45;}
+.rc-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.rc-tag{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--cream-2);color:var(--ink-mid);border:1px solid var(--line);}
+.rc-tag.s{background:#EBF3EE;border-color:#B8D4BF;color:var(--green);}
+.rc-footer{margin-top:9px;padding-top:8px;border-top:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;}
+.rc-footer .cost{font-size:10.5px;color:var(--ink-soft);}
+.rc-footer .cost b{color:var(--pom);}
+.rc-btn{font-size:11px;padding:4px 11px;background:var(--green);color:#FAF6EE;border:none;border-radius:20px;cursor:pointer;font-family:inherit;font-weight:600;}
+
+/* DESTINATION */
+.city-region{font-size:9px;letter-spacing:2px;color:var(--ink-soft);text-transform:uppercase;margin:12px 0 6px;font-family:"DM Mono",monospace;}
+.city-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;}
+.city-btn{padding:5px 12px;border-radius:20px;border:1.5px solid var(--line);background:white;font-size:12px;cursor:pointer;font-family:inherit;transition:.13s;color:var(--ink-mid);}
+.city-btn:hover{border-color:var(--green);color:var(--green);}
+.city-btn.on{background:var(--green);border-color:var(--green);color:#FAF6EE;font-weight:600;}
+.culture-section{margin-bottom:20px;}
+.cs-head{font-family:"Noto Serif SC",serif;font-weight:700;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.cs-head::before{content:'';width:3px;height:16px;background:var(--gold);border-radius:2px;display:inline-block;}
+.culture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.culture-card{background:white;border-radius:9px;border:1px solid var(--line-2);overflow:hidden;}
+.cc-top{height:72px;display:flex;align-items:center;justify-content:center;font-size:22px;position:relative;overflow:hidden;background-size:cover!important;background-position:center!important;}
+.cc-top::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.11)' stroke-width='1'%3E%3Cpolygon points='20,3 37,20 20,37 3,20'/%3E%3C/g%3E%3C/svg%3E");background-size:40px 40px;}
+.cc-body{padding:8px 10px 10px;}
+.cc-title{font-weight:700;font-size:12px;margin-bottom:3px;}
+.cc-desc{font-size:10.5px;color:var(--ink-soft);line-height:1.5;}
+.dim-tabs{display:flex;border-bottom:2px solid var(--line);margin-bottom:16px;}
+.dtab{padding:8px 16px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:12.5px;color:var(--ink-soft);position:relative;transition:.13s;}
+.dtab:hover{color:var(--ink);}
+.dtab.on{color:var(--green);font-weight:700;}
+.dtab.on::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--green);}
+.place-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.place-card{background:white;border-radius:var(--r);border:1px solid var(--line-2);overflow:hidden;box-shadow:0 2px 9px -5px rgba(28,20,16,.11);}
+.pc-top{height:110px;display:flex;align-items:flex-end;padding:10px 12px;position:relative;overflow:hidden;background-size:cover!important;background-position:center!important;}
+.pc-top::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1'%3E%3Cpolygon points='24,3 45,24 24,45 3,24'/%3E%3Crect x='10' y='10' width='28' height='28'/%3E%3C/g%3E%3C/svg%3E");background-size:48px 48px;}
+.pc-top h4{font-family:"Noto Serif SC",serif;font-weight:700;font-size:14.5px;color:#FAF6EE;position:relative;text-shadow:0 1px 3px rgba(0,0,0,.2);}
+.pc-body{padding:10px 12px 12px;}
+.pc-desc{font-size:11.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:7px;}
+.pc-door{padding:6px 8px;background:var(--cream-2);border-left:3px solid var(--gold);border-radius:0 5px 5px 0;font-size:10.5px;line-height:1.5;color:var(--ink-mid);margin-bottom:8px;}
+.pc-door b{color:var(--pom-light);}
+.pc-meta{display:flex;flex-direction:column;gap:3px;margin-bottom:7px;}
+.pc-meta-row{font-size:10.5px;color:var(--ink-soft);display:flex;align-items:flex-start;gap:4px;}
+.pc-meta-row b{color:var(--ink-mid);font-weight:600;flex:0 0 26px;}
+.pc-stars{color:var(--gold);font-size:10.5px;}
+.pc-review{margin-bottom:8px;padding:7px 9px;background:#FFF8F0;border-radius:6px;font-size:10.5px;color:var(--ink-mid);line-height:1.55;border:1px solid #F0DFC0;}
+.pc-review .reviewer{font-size:9.5px;color:var(--ink-soft);margin-top:3px;}
+.add-itin-btn{width:100%;padding:6px;background:transparent;border:1px solid var(--green);color:var(--green);border-radius:6px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;}
+.add-itin-btn:hover,.add-itin-btn.added{background:var(--green);color:#FAF6EE;}
+
+/* ITINERARY */
+.itin-layout{display:grid;grid-template-columns:1fr 300px;gap:16px;}
+.itin-header{background:white;border-radius:var(--r);border:1px solid var(--line-2);padding:14px 18px;margin-bottom:12px;}
+.itin-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:var(--cream-2);border:1px solid var(--line);font-size:11px;color:var(--ink-mid);}
+.badge.g{color:var(--green);font-weight:600;font-family:"DM Mono",monospace;}
+.itin-hint{font-size:11px;color:var(--ink-soft);margin-top:7px;padding-top:7px;border-top:1px solid var(--line-2);}
+.day-block{background:white;border-radius:var(--r);border:1px solid var(--line-2);margin-bottom:9px;overflow:hidden;}
+.day-head{padding:9px 15px;background:var(--cream-2);border-bottom:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;}
+.day-head .dnum{font-family:"Noto Serif SC",serif;font-weight:700;font-size:13px;color:var(--green);}
+.day-head .ddate{font-family:"DM Mono",monospace;font-size:10px;color:var(--ink-soft);}
+.stop{display:flex;align-items:stretch;padding:0 15px;cursor:grab;transition:background .1s;}
+.stop:hover{background:var(--cream-2);}
+.stop.dragging{opacity:.3;}
+.stop.drag-over{border-top:2px solid var(--gold);}
+.stop-time{flex:0 0 64px;padding:10px 9px 10px 0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;border-right:1px solid var(--line-2);}
+.stop-time .t1{font-family:"DM Mono",monospace;font-size:10.5px;color:var(--ink-mid);cursor:pointer;padding:2px 4px;border-radius:3px;transition:.1s;}
+.stop-time .t1:hover{background:var(--cream-3);}
+.stop-time .t1[contenteditable="true"]{background:var(--gold-light);color:var(--green);outline:none;border:none;width:50px;text-align:right;}
+.stop-time .t2{font-family:"DM Mono",monospace;font-size:9.5px;color:var(--ink-soft);}
+.stop-dot-col{flex:0 0 24px;display:flex;flex-direction:column;align-items:center;padding-top:12px;}
+.stop-dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px;}
+.stop-line{flex:1;width:1px;background:var(--line);margin-top:3px;}
+.stop-info{flex:1;padding:9px 0 9px 11px;}
+.stop-info h4{font-size:13px;font-weight:600;}
+.stop-info .cat{font-size:10.5px;color:var(--ink-soft);margin-top:1px;}
+.stop-info .dur{font-size:10.5px;color:var(--green);margin-top:2px;}
+.stop-info .tr{font-size:10px;color:var(--pom);font-weight:600;margin-top:4px;}
+.stop-drag{color:var(--ink-soft);font-size:14px;padding:10px 0 10px 7px;cursor:grab;opacity:.32;}
+.transit-row{display:flex;align-items:center;gap:7px;padding:4px 15px 4px 95px;}
+.transit-info{font-size:10px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:3px;}
+.transit-info .tt{color:var(--pom);font-weight:600;font-family:"DM Mono",monospace;}
+.transit-line{flex:1;height:1px;border-top:1px dashed var(--cream-3);}
+.aside-card{background:white;border-radius:var(--r);border:1px solid var(--line-2);padding:14px;margin-bottom:11px;}
+.aside-card h4{font-family:"Noto Serif SC",serif;font-weight:700;font-size:13.5px;margin-bottom:9px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--line-2);}
+.summary-row:last-child{border:none;}
+.summary-row .lab{font-size:11.5px;color:var(--ink-soft);}
+.summary-row .val{font-size:12px;font-weight:600;}
+.share-btn{width:100%;padding:9px;background:var(--green);color:#FAF6EE;border:none;border-radius:7px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;margin-top:5px;}
+.tip-item{padding:7px 9px;background:var(--cream-2);border-radius:6px;border-left:3px solid var(--gold);font-size:11px;line-height:1.5;color:var(--ink-mid);margin-bottom:6px;}
+.tip-item b{color:var(--pom);}
+
+/* COMMUNITY */
+.community-hero{background-color:var(--green);background-image:linear-gradient(90deg,rgba(15,43,34,.93),rgba(15,43,34,.62),rgba(15,43,34,.2)),url('assets/hemu-autumn.jpg');background-size:cover;background-position:center 55%;border-radius:13px;padding:28px 26px;margin-bottom:20px;color:#FAF6EE;position:relative;overflow:hidden;box-shadow:0 14px 30px -24px rgba(28,20,16,.7);}
+.community-hero::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.055)' stroke-width='1'%3E%3Cpolygon points='35,4 66,35 35,66 4,35'/%3E%3Crect x='14' y='14' width='42' height='42'/%3E%3C/g%3E%3C/svg%3E");background-size:70px 70px;}
+.community-hero h2{font-family:"Noto Serif SC",serif;font-weight:700;font-size:22px;position:relative;margin-bottom:5px;}
+.community-hero p{font-size:12px;color:rgba(250,246,238,.68);line-height:1.6;position:relative;max-width:48ch;}
+.ch-btn{margin-top:12px;position:relative;display:inline-block;padding:7px 16px;background:var(--gold);color:var(--green);border:none;border-radius:20px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;}
+.post-filters{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;}
+.pf-btn{padding:5px 13px;border-radius:20px;border:1px solid var(--line);background:white;font-size:11.5px;cursor:pointer;font-family:inherit;color:var(--ink-mid);transition:.13s;}
+.pf-btn:hover{border-color:var(--green);color:var(--green);}
+.pf-btn.on{background:var(--green);border-color:var(--green);color:#FAF6EE;font-weight:600;}
+.post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;}
+.post-card{background:white;border-radius:var(--r);border:1px solid var(--line-2);overflow:hidden;box-shadow:0 2px 9px -5px rgba(28,20,16,.11);}
+.post-cap{height:120px;display:flex;align-items:flex-end;padding:10px 12px;position:relative;overflow:hidden;background-size:cover!important;background-position:center!important;}
+
+/* Scenic photography treatment */
+.rc-cap::before,.pc-top::before,.post-cap::before,.cc-top::before{opacity:.28;mix-blend-mode:soft-light;}
+.rc-days,.post-cap .psn{backdrop-filter:blur(8px);background:rgba(15,43,34,.42);border-color:rgba(255,255,255,.46);box-shadow:0 5px 14px rgba(0,0,0,.12);}
+.pc-top::after{content:'';position:absolute;inset:34% 0 0;background:linear-gradient(transparent,rgba(12,27,22,.76));}
+.pc-top h4{z-index:1;font-size:16px;}
+.route-card,.place-card,.post-card{box-shadow:0 10px 28px -22px rgba(28,20,16,.5);}
+.post-cap::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='55' height='55'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'%3E%3Cpolygon points='27,3 52,27 27,52 3,27'/%3E%3Crect x='11' y='11' width='34' height='34'/%3E%3C/g%3E%3C/svg%3E");background-size:55px 55px;}
+.post-cap .psn{position:relative;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:2px 7px;font-size:9.5px;color:#FAF6EE;font-family:"DM Mono",monospace;}
+.post-body{padding:11px 12px 12px;}
+.post-body h4{font-family:"Noto Serif SC",serif;font-weight:700;font-size:14px;margin-bottom:4px;}
+.post-preview{font-size:11.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:9px;}
+.post-meta{display:flex;align-items:center;justify-content:space-between;}
+.post-author{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-mid);}
+.post-author .av{width:20px;height:20px;border-radius:50%;background:var(--cream-3);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.post-stats{display:flex;align-items:center;gap:9px;font-size:10.5px;color:var(--ink-soft);}
+.post-route{margin-top:8px;padding:6px 9px;background:var(--cream-2);border-radius:6px;font-size:10.5px;color:var(--ink-mid);border:1px solid var(--line-2);}
+.post-route b{color:var(--green);}
+.use-route-btn{margin-top:7px;width:100%;padding:6px;background:transparent;border:1px solid var(--green);color:var(--green);border-radius:6px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:.13s;}
+.use-route-btn:hover{background:var(--green);color:#FAF6EE;}
+
+/* AI */
+.ai-layout{display:grid;grid-template-columns:1fr 250px;gap:16px;height:calc(100vh - 50px - 46px);}
+.chat-area{display:flex;flex-direction:column;background:white;border-radius:var(--r);border:1px solid var(--line-2);overflow:hidden;}
+.chat-head{padding:11px 17px;border-bottom:1px solid var(--line-2);background:var(--cream-2);display:flex;align-items:center;gap:8px;}
+.chat-head .ai-av{width:30px;height:30px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.chat-head .ai-name{font-weight:700;font-size:13px;}
+.chat-head .ai-st{font-size:10px;color:var(--ink-soft);}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:11px;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--cream-3);border-radius:2px;}
+.msg{display:flex;gap:8px;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-bubble{max-width:72%;padding:9px 12px;border-radius:10px;font-size:12.5px;line-height:1.6;}
+.msg.ai .msg-bubble{background:var(--cream-2);color:var(--ink);border-radius:3px 10px 10px 10px;}
+.msg.user .msg-bubble{background:var(--green);color:#FAF6EE;border-radius:10px 3px 10px 10px;}
+.msg-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex:0 0 26px;}
+.msg.ai .msg-av{background:var(--green);}
+.msg.user .msg-av{background:var(--cream-3);font-size:10px;}
+.chat-input-area{padding:11px 13px;border-top:1px solid var(--line-2);display:flex;gap:7px;}
+.chat-input{flex:1;padding:8px 12px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:12.5px;background:var(--cream);color:var(--ink);outline:none;resize:none;}
+.chat-input:focus{border-color:var(--green);}
+.send-btn{padding:8px 14px;background:var(--green);color:#FAF6EE;border:none;border-radius:7px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.quick-qs{background:white;border-radius:var(--r);border:1px solid var(--line-2);padding:13px;}
+.quick-qs h4{font-family:"Noto Serif SC",serif;font-weight:700;font-size:13px;margin-bottom:9px;}
+.quick-q{display:block;width:100%;text-align:left;padding:7px 9px;margin-bottom:5px;background:var(--cream-2);border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:11px;color:var(--ink-mid);cursor:pointer;transition:.11s;}
+.quick-q:hover{border-color:var(--green);color:var(--green);}
+.ai-caps{background:white;border-radius:var(--r);border:1px solid var(--line-2);padding:13px;margin-top:9px;}
+.ai-caps h4{font-family:"Noto Serif SC",serif;font-weight:700;font-size:13px;margin-bottom:8px;}
+.cap-item{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11.5px;color:var(--ink-mid);}
+
+/* TOAST & MODAL */
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,16px);background:var(--ink);color:#FAF6EE;padding:8px 16px;border-radius:20px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:100;white-space:nowrap;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.36);z-index:50;display:none;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:white;border-radius:14px;padding:24px;width:420px;max-width:90vw;}
+.modal h3{font-family:"Noto Serif SC",serif;font-weight:700;font-size:18px;margin-bottom:5px;}
+.modal p{font-size:12px;color:var(--ink-soft);margin-bottom:14px;line-height:1.6;}
+.modal-link{background:var(--cream-2);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-mid);margin-bottom:12px;word-break:break-all;}
+.modal-note{font-size:10.5px;color:var(--ink-soft);margin-bottom:14px;line-height:1.55;padding:7px 9px;background:#EBF3EE;border-radius:6px;border:1px solid #B8D4BF;}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;}
+
+/* APP / MOBILE */
+@media (max-width: 760px){
+  :root{--r:16px;}
+  html,body{height:100%;background:#E9E4D8;overscroll-behavior:none;}
+  body{min-width:320px;}
+  .shell{height:100dvh;display:block;overflow:hidden;background:var(--cream);}
+  .main{height:100dvh;display:flex;}
+
+  .sidebar{position:fixed;left:0;right:0;bottom:0;width:auto;height:calc(64px + env(safe-area-inset-bottom));
+    z-index:40;display:block;background:rgba(26,74,58,.97);border-radius:20px 20px 0 0;
+    padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -8px 30px rgba(28,20,16,.14);backdrop-filter:blur(18px);}
+  .sidebar::before,.sb-brand,.sb-divider,.sb-season,.sb-weather{display:none;}
+  .sb-nav{height:64px;padding:0 4px;display:grid;grid-template-columns:repeat(5,1fr);}
+  .sb-nav button{min-width:0;height:64px;padding:8px 1px 7px;gap:3px;display:flex;flex-direction:column;
+    justify-content:center;text-align:center;font-size:9.5px;line-height:1.1;color:rgba(250,246,238,.55);}
+  .sb-nav button .ico{font-size:19px;width:auto;line-height:1.1;filter:saturate(.7);}
+  .sb-nav button:hover{background:none;}
+  .sb-nav button.on{background:none;color:#fff;}
+  .sb-nav button.on .ico{filter:none;transform:translateY(-1px);}
+  .sb-nav button.on::before{left:50%;top:3px;bottom:auto;width:18px;height:3px;transform:translateX(-50%);border-radius:0 0 3px 3px;background:var(--gold-light);}
+
+  .topbar{height:calc(54px + env(safe-area-inset-top));flex:0 0 calc(54px + env(safe-area-inset-top));
+    padding:env(safe-area-inset-top) 16px 0;background:rgba(250,246,238,.94);backdrop-filter:blur(18px);}
+  .tb-left{gap:6px;min-width:0;}
+  .tb-title{font-size:17px;white-space:nowrap;}
+  .tb-sub{display:none;}
+  .tb-right{gap:6px;}
+  .tb-right .btn{width:38px;height:38px;padding:0;border-radius:50%;font-size:0;display:grid;place-items:center;}
+  .tb-right .btn-ghost::before{content:'↗';font-size:18px;}
+  .tb-right .btn-primary{display:none;}
+
+  .content{padding:14px 14px calc(88px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
+  .screen.active{animation:appIn .22s cubic-bezier(.2,.75,.3,1) both;}
+  @keyframes appIn{from{opacity:.45;transform:translateY(5px) scale(.995)}to{opacity:1;transform:none}}
+
+  .discover-hero{min-height:222px;padding:24px 20px;margin-bottom:16px;border-radius:20px;background-image:linear-gradient(180deg,rgba(15,43,34,.28) 0%,rgba(15,43,34,.86) 86%),url('assets/xinjiang-hero.jpg');background-position:center;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 14px 34px -22px rgba(26,74,58,.8);}
+  .dh-ey{font-size:8px;letter-spacing:2.4px;}
+  .dh-h1{font-size:27px;margin-top:8px;}
+  .dh-p{font-size:12px;}
+  .dh-hint{font-size:10px;margin-top:12px;line-height:1.5;}
+
+  .season-tabs{overflow-x:auto;gap:8px;margin:0 -14px 18px;padding:0 14px 3px;scroll-snap-type:x mandatory;scrollbar-width:none;}
+  .season-tabs::-webkit-scrollbar{display:none;}
+  .stab{flex:0 0 116px;min-height:76px;padding:10px;scroll-snap-align:start;border-radius:14px;}
+  .stab:hover{transform:none;}
+  .stab .sico{font-size:18px;margin-bottom:2px;}
+  .stab .sname{font-size:13px;}
+  .stab .sdesc{font-size:9.5px;}
+  .sec-header{align-items:center;margin-bottom:12px;}
+  .sec-header .t{font-size:18px;}
+  .sec-header .hint{display:none;}
+
+  .route-grid{display:flex;overflow-x:auto;gap:11px;margin:0 -14px;padding:0 14px 10px;scroll-snap-type:x mandatory;scrollbar-width:none;}
+  .route-grid::-webkit-scrollbar{display:none;}
+  .route-card{flex:0 0 min(82vw,310px);scroll-snap-align:center;border-radius:18px;box-shadow:0 8px 24px -18px rgba(28,20,16,.5);}
+  .route-card:hover{transform:none;}
+  .rc-cap{height:154px;}
+  .rc-body{padding:14px;}
+  .rc-name{font-size:16px;}
+  .rc-btn,.add-itin-btn,.use-route-btn,.share-btn,.send-btn,.ch-btn{min-height:42px;}
+
+  .itin-layout{display:block;}
+  .itin-header{padding:13px 14px;border-radius:16px;}
+  .badge{font-size:10px;padding:4px 8px;}
+  .day-block{border-radius:16px;}
+  .stop{padding:0 12px;}
+  .stop-time{flex-basis:57px;}
+  .stop-info{min-width:0;}
+  .transit-row{padding-left:78px;}
+  .aside-card{border-radius:16px;}
+
+  .city-region{margin-top:14px;}
+  .city-selector,.post-filters,.dim-tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;margin-right:-14px;padding-right:14px;}
+  .city-selector::-webkit-scrollbar,.post-filters::-webkit-scrollbar,.dim-tabs::-webkit-scrollbar{display:none;}
+  .city-btn,.pf-btn,.dtab{white-space:nowrap;min-height:38px;}
+  .dim-tabs{margin-left:-14px;padding-left:14px;}
+  .culture-grid{display:flex;overflow-x:auto;gap:9px;margin:0 -14px;padding:0 14px 5px;scroll-snap-type:x mandatory;scrollbar-width:none;}
+  .culture-grid::-webkit-scrollbar{display:none;}
+  .culture-card{flex:0 0 75vw;scroll-snap-align:center;border-radius:14px;}
+  .cc-top{height:86px;}
+  .cc-body{padding:11px 12px 13px;}
+  .place-grid,.post-grid{grid-template-columns:1fr;gap:12px;}
+  .place-card,.post-card{border-radius:17px;}
+  .pc-top{height:132px;}
+  .pc-body,.post-body{padding:13px 14px 14px;}
+
+  .community-hero{padding:21px 19px;border-radius:20px;}
+  .community-hero h2{font-size:21px;}
+  .post-cap{height:142px;}
+
+  .ai-layout{display:block;height:calc(100dvh - 54px - 102px - env(safe-area-inset-top) - env(safe-area-inset-bottom));}
+  .chat-area{height:100%;border-radius:18px;}
+  .chat-head{padding:10px 13px;}
+  .chat-msgs{padding:13px 11px;}
+  .msg-bubble{max-width:82%;font-size:12px;}
+  .chat-input-area{padding:9px;align-items:flex-end;}
+  .chat-input{min-height:42px;max-height:92px;border-radius:12px;}
+  .send-btn{padding:8px 13px;border-radius:12px;}
+  .ai-layout>div:last-child{display:none;}
+
+  .modal-bg{align-items:flex-end;}
+  .modal{width:100%;max-width:none;border-radius:22px 22px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom));animation:sheetUp .22s ease both;}
+  @keyframes sheetUp{from{transform:translateY(18px);opacity:.6}to{transform:none;opacity:1}}
+  .modal-btns .btn{min-height:42px;padding:8px 18px;}
+  .toast{bottom:calc(76px + env(safe-area-inset-bottom));max-width:88vw;white-space:normal;text-align:center;}
+}
+
+@media (min-width: 761px) and (max-width: 1000px){
+  :root{--sidebar:190px;}
+  .route-grid{grid-template-columns:repeat(2,1fr);}
+  .itin-layout,.ai-layout{grid-template-columns:1fr 220px;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="name">馕途</div>
+    <div class="sub">Nang Tu · Xinjiang</div>
+    <div class="tagline">一城一味 · 深耕新疆</div>
+  </div>
+  <div class="sb-divider"></div>
+  <nav class="sb-nav">
+    <button class="on" data-tab="discover"><span class="ico">🧭</span>发现路线</button>
+    <button data-tab="itinerary"><span class="ico">📋</span>我的行程</button>
+    <button data-tab="destination"><span class="ico">🏔</span>目的地详情</button>
+    <button data-tab="community"><span class="ico">📝</span>旅行记录</button>
+    <button data-tab="ai"><span class="ico">✨</span>AI 规划助手</button>
+  </nav>
+  <div class="sb-divider"></div>
+  <div class="sb-season">
+    <div class="lab">切换季节</div>
+    <div class="season-pills">
+      <button class="season-pill" data-s="spring">🌸 春</button>
+      <button class="season-pill on" data-s="summer">☀️ 夏</button>
+      <button class="season-pill" data-s="autumn">🍂 秋</button>
+      <button class="season-pill" data-s="winter">❄️ 冬</button>
+    </div>
+  </div>
+  <div class="sb-weather">
+    <div class="wc">
+      <div>
+        <div class="city">📍 乌鲁木齐</div>
+        <div class="temp">28°<span style="font-size:11px;color:rgba(250,246,238,.38)">C</span></div>
+        <div class="desc">多云转晴 · 湿度 32%</div>
+      </div>
+      <div style="font-size:26px">⛅</div>
+    </div>
+    <div class="warn">⚠️ 南疆近期高温，建议上午出行，带足饮用水</div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-title" id="topTitle">发现路线</div>
+      <div class="tb-sub" id="topSub">夏季 · 三条热门路线</div>
+    </div>
+    <div class="tb-right">
+      <button class="btn btn-ghost" onclick="showModal()">🔗 分享行程</button>
+      <button class="btn btn-primary" onclick="switchTab('itinerary')">我的行程 →</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <section class="screen active" id="tab-discover">
+      <div class="discover-hero">
+        <div class="dh-ey">One City · One Flavor · Xinjiang</div>
+        <h1 class="dh-h1">一城<span>一味</span>，逛吃新疆</h1>
+        <p class="dh-p">不堆景点，先认每座城的招牌味道。选一条路线，带你把新疆玩透。</p>
+        <div class="dh-hint">✦ 每个季节三条路线 · 后续持续增加 · 所有路线均可自定义修改</div>
+      </div>
+      <div class="season-tabs" id="seasonTabs">
+        <button class="stab" data-s="spring"><div class="sico">🌸</div><div class="sname">春季</div><div class="sdesc">3–5月 · 花海草原</div></button>
+        <button class="stab on" data-s="summer"><div class="sico">☀️</div><div class="sname">夏季</div><div class="sdesc">6–8月 · 草原湖泊</div></button>
+        <button class="stab" data-s="autumn"><div class="sico">🍂</div><div class="sname">秋季</div><div class="sdesc">9–10月 · 瓜果丰收</div></button>
+        <button class="stab" data-s="winter"><div class="sico">❄️</div><div class="sname">冬季</div><div class="sdesc">11–2月 · 冰雪温泉</div></button>
+      </div>
+      <div class="sec-header">
+        <div class="t">热门路线<small id="seasonLabel">Summer Routes</small></div>
+        <div class="hint">点击路线卡片可加入行程并自由修改</div>
+      </div>
+      <div class="route-grid" id="routeGrid"></div>
+    </section>
+
+    <section class="screen" id="tab-itinerary">
+      <div class="itin-layout">
+        <div>
+          <div class="itin-header">
+            <div class="itin-meta">
+              <span class="badge">☀️ 夏季路线</span>
+              <span class="badge g">7天6夜</span>
+              <span class="badge">北疆精华 · 约1,200km</span>
+            </div>
+            <div class="itin-hint">💡 点击时间可直接编辑 · 拖动 ⠿ 调整顺序 · 系统已预估各段车程</div>
+          </div>
+          <div id="itinDays"></div>
+        </div>
+        <div>
+          <div class="aside-card">
+            <h4>行程摘要</h4>
+            <div class="summary-row"><span class="lab">出发城市</span><span class="val">乌鲁木齐</span></div>
+            <div class="summary-row"><span class="lab">途经城市</span><span class="val">4座</span></div>
+            <div class="summary-row"><span class="lab">打卡景点</span><span class="val">14 个</span></div>
+            <div class="summary-row"><span class="lab">总车程</span><span class="val" style="color:var(--pom)">约 18 小时</span></div>
+            <div class="summary-row"><span class="lab">预估花费</span><span class="val">¥3,500–5,000</span></div>
+            <button class="share-btn" onclick="showModal()">📤 分享给朋友</button>
+          </div>
+          <div class="aside-card">
+            <h4>⚠️ 避坑提示</h4>
+            <div class="tip-item">喀纳斯→伊犁 约<b>5小时</b>，不建议同天赶路</div>
+            <div class="tip-item">赛里木湖→乌市 约<b>4小时</b>，安排最后一天下午出发</div>
+            <div class="tip-item">北疆旺季住宿<b>提前2周预订</b>，否则一房难求</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="tab-destination">
+      <div class="sec-header" style="margin-bottom:10px;">
+        <div class="t">目的地详情<small>Destinations</small></div>
+        <div class="hint">选城市 → 查看文化 + 景点美食购物住宿</div>
+      </div>
+      <div id="cityGroups"></div>
+      <div class="dim-tabs" id="dimTabs" style="margin-top:16px;">
+        <button class="dtab on" data-dim="sight">🏞 景点</button>
+        <button class="dtab" data-dim="food">🍢 美食</button>
+        <button class="dtab" data-dim="drink">🧋 饮品</button>
+        <button class="dtab" data-dim="shop">🛍 购物</button>
+        <button class="dtab" data-dim="stay">🏨 住宿</button>
+      </div>
+      <div id="cultureSection"></div>
+      <div class="place-grid" id="placeGrid"></div>
+    </section>
+
+    <section class="screen" id="tab-community">
+      <div class="community-hero">
+        <h2>旅行记录社区</h2>
+        <p>真实走过的路线、真实踩过的坑、真实发现的宝藏——这里是你们写给彼此的新疆旅行手册。</p>
+        <button class="ch-btn">✍️ 写游记</button>
+      </div>
+      <div class="post-filters" id="postFilters">
+        <button class="pf-btn on">全部</button>
+        <button class="pf-btn">🌸 春季</button>
+        <button class="pf-btn">☀️ 夏季</button>
+        <button class="pf-btn">🍂 秋季</button>
+        <button class="pf-btn">❄️ 冬季</button>
+        <button class="pf-btn">🏔 北疆</button>
+        <button class="pf-btn">🕌 南疆</button>
+      </div>
+      <div class="post-grid" id="postGrid"></div>
+    </section>
+
+    <section class="screen" id="tab-ai">
+      <div class="ai-layout">
+        <div class="chat-area">
+          <div class="chat-head">
+            <div class="ai-av">🤖</div>
+            <div><div class="ai-name">馕途 AI 助手</div><div class="ai-st">● Dify Agent 已连接 · 新疆旅行规划</div></div>
+          </div>
+          <div class="chat-msgs" id="chatMsgs">
+            <div class="msg ai"><div class="msg-av">🤖</div><div class="msg-bubble">你好！我是馕途 AI，专门帮你规划新疆旅行。<br><br>告诉我出发时间、天数、偏好（自然 / 美食 / 文化），我来帮你定制专属路线 😊</div></div>
+          </div>
+          <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" rows="1" placeholder="问我任何关于新疆旅行的问题…"></textarea>
+            <button class="send-btn" onclick="sendMsg()">发送</button>
+          </div>
+        </div>
+        <div>
+          <div class="quick-qs">
+            <h4>💬 快速提问</h4>
+            <button class="quick-q" onclick="askQ(this)">帮我规划5天秋季南疆路线</button>
+            <button class="quick-q" onclick="askQ(this)">去新疆必吃哪些美食？</button>
+            <button class="quick-q" onclick="askQ(this)">冬季去阿勒泰滑雪怎么安排？</button>
+            <button class="quick-q" onclick="askQ(this)">北疆和南疆怎么选？</button>
+            <button class="quick-q" onclick="askQ(this)">新疆旅行要准备什么？</button>
+          </div>
+          <div class="ai-caps">
+            <h4>AI 能帮你做什么</h4>
+            <div class="cap-item"><span>🗺</span>生成个性化路线规划</div>
+            <div class="cap-item"><span>🍽</span>推荐当地特色美食</div>
+            <div class="cap-item"><span>⏱</span>估算行程时间距离</div>
+            <div class="cap-item"><span>🌤</span>结合季节给出建议</div>
+            <div class="cap-item"><span>💰</span>预估旅行预算</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+  <div class="modal">
+    <h3>📤 分享你的行程</h3>
+    <p>你规划的「北疆夏季7天精华路线」已生成专属链接，朋友打开后可查看完整行程，也可复制一份自己修改。</p>
+    <div class="modal-link">https://nantu.app/share/xj-summer-7d-abc123</div>
+    <div class="modal-note">📊 行程被分享后，我们会分析哪些城市最受欢迎、哪些景点被反复加入，持续优化推荐路线。</div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal()">关闭</button>
+      <button class="btn btn-primary" onclick="copyLink()">复制链接</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const routes={spring:[{days:3,name:'吐鲁番春色·东疆快线',g:'#4A6B2A',route:'乌鲁木齐 → 吐鲁番 → 鄯善',tags:['杏花初开','火焰山','坎儿井'],season:'3–4月最佳',cost:'¥1,500–2,500'},{days:5,name:'伊犁花海·塞外江南',g:'#1A4A3A',route:'乌鲁木齐 → 赛里木湖 → 伊宁 → 那拉提',tags:['野杏花','薰衣草','那拉提'],season:'4–5月最佳',cost:'¥2,500–4,000'},{days:7,name:'东天山环线·春意盎然',g:'#2A5C3A',route:'乌鲁木齐 → 天山天池 → 江布拉克 → 木垒',tags:['天池','草原','旱田花海'],season:'4–5月最佳',cost:'¥3,000–5,000'}],summer:[{days:3,name:'乌鲁木齐精华·城市初探',g:'#245C48',route:'乌鲁木齐 → 天山天池 → 南山牧场',tags:['大巴扎','博物馆','天池'],season:'6–8月',cost:'¥1,200–2,000'},{days:5,name:'北疆伊犁·草原湖泊',g:'#1A4A3A',route:'乌鲁木齐 → 赛里木湖 → 那拉提草原',tags:['赛里木湖','那拉提','薰衣草'],season:'6–8月最佳',cost:'¥2,800–4,500'},{days:7,name:'北疆精华大环线',g:'#1E503A',route:'乌鲁木齐 → 伊犁 → 喀纳斯 → 禾木 → 五彩滩',tags:['喀纳斯','禾木村','五彩滩'],season:'6–9月',cost:'¥4,000–6,500'}],autumn:[{days:3,name:'吐鲁番秋收·瓜果飘香',g:'#8C3A1A',route:'乌鲁木齐 → 吐鲁番 → 葡萄沟',tags:['葡萄节','火焰山','交河故城'],season:'9月葡萄节',cost:'¥1,500–2,500'},{days:5,name:'北疆金秋·喀纳斯秋色',g:'#2A5C3E',route:'乌鲁木齐 → 可可托海 → 喀纳斯 → 禾木',tags:['金秋白桦','禾木晨雾','可可托海'],season:'9月下旬–10月',cost:'¥3,000–5,000'},{days:7,name:'南疆人文·古城丝路',g:'#7A3A1A',route:'乌鲁木齐 → 库车 → 喀什 → 帕米尔',tags:['喀什古城','克孜尔','慕士塔格'],season:'9–10月',cost:'¥3,500–5,500'}],winter:[{days:3,name:'乌鲁木齐冰雪·城市暖冬',g:'#1A4A5C',route:'乌鲁木齐 → 南山滑雪 → 天山峡谷',tags:['南山滑雪','年货巴扎','天山峡谷'],season:'12–2月',cost:'¥1,500–2,500'},{days:5,name:'阿勒泰滑雪·粉雪天堂',g:'#1E503A',route:'乌鲁木齐 → 阿勒泰 → 将军山 → 可可托海',tags:['将军山滑雪','可可托海','禾木雪乡'],season:'12–3月',cost:'¥3,000–5,000'},{days:7,name:'北疆冰雪大环线',g:'#1A3A5C',route:'乌鲁木齐 → 阿勒泰 → 禾木雪乡 → 赛里木湖蓝冰',tags:['禾木雪景','蓝冰赛里木','粉雪'],season:'12–2月',cost:'¥4,000–6,000'}]};
+
+const cities={'北疆':[{id:'wlmq',name:'乌鲁木齐',note:'进疆门户'},{id:'alt',name:'阿勒泰',note:'滑雪胜地'},{id:'yl',name:'伊犁（伊宁）',note:'塞外江南'},{id:'kns',name:'喀纳斯',note:'东方瑞士'},{id:'klmy',name:'克拉玛依',note:'魔鬼城'},{id:'bl',name:'博乐',note:'赛里木湖'},{id:'tc',name:'塔城',note:'野杏花'},{id:'cj',name:'昌吉',note:'江布拉克'}],'南疆':[{id:'ks',name:'喀什',note:'古城丝路'},{id:'kc',name:'库车',note:'天山峡谷'},{id:'ht',name:'和田',note:'玉石胡杨'},{id:'kl',name:'库尔勒',note:'博斯腾湖'},{id:'pmr',name:'帕米尔高原',note:'慕士塔格峰'},{id:'bazhou',name:'巴音布鲁克',note:'天鹅湖'}],'东疆':[{id:'tlf',name:'吐鲁番',note:'火焰山葡萄'},{id:'hami',name:'哈密',note:'哈密瓜'}]};
+
+const culture={wlmq:[{ico:'🏛',bg:'#1A4A3A',title:'楼兰文明',desc:'2000年前的楼兰美女长眠于此，博物馆现存完整女尸，面容清晰可辨。'},{ico:'🕌',bg:'#245C48',title:'多元民族',desc:'47个民族在此共居，是全国民族最多样的城市之一，每个节庆都是文化盛宴。'},{ico:'🎭',bg:'#8C3A1A',title:'麦西来甫',desc:'维吾尔人的传统歌舞聚会，音乐一响所有人自发起舞，是活着的非物质文化遗产。'}],ks:[{ico:'🕌',bg:'#7A3A1A',title:'千年古城',desc:'喀什噶尔已有2000年建城史，是丝绸之路核心枢纽，汉代即已繁盛。'},{ico:'⚽',bg:'#4A6B2A',title:'足球之城',desc:'南疆孩子几乎人人踢球，喀什出了多位国脚，街头巷尾随处可见踢球的小孩。'},{ico:'🎵',bg:'#2A4A6C',title:'十二木卡姆',desc:'维吾尔古典音乐巅峰，被列入人类非物质文化遗产，完整演奏需要24小时。'}],yl:[{ico:'🌸',bg:'#4A2A6C',title:'薰衣草之乡',desc:'伊犁霍城是中国唯一大规模薰衣草产地，种植面积占全国90%以上。'},{ico:'🐎',bg:'#1A4A3A',title:'哈萨克马背文化',desc:'哈萨克族以马为生，叼羊赛马是传统节目，至今保持随季节转场的游牧生活。'},{ico:'🏛',bg:'#245C48',title:'锡伯族东迁',desc:'1764年4000名锡伯族战士奉命西迁戍边，260年未归，至今保留独特语言文字。'}],kns:[{ico:'🏠',bg:'#2A5C3E',title:'图瓦人',desc:'图瓦族是喀纳斯原住民，以木屋为家、畜牧为业，语言习俗与外界截然不同。'},{ico:'🐟',bg:'#1A4A5C',title:'湖怪传说',desc:'科学家认为湖怪是超大型哲罗鲑，体长可达10米，至今是当地著名传说。'},{ico:'🍄',bg:'#3A5C2A',title:'西伯利亚植被',desc:'中国唯一具有西伯利亚泰加林景观的地方，秋天西伯利亚候鸟在此停歇。'}],tlf:[{ico:'🔥',bg:'#8C3A1A',title:'火焰山传说',desc:'《西游记》同款火焰山，夏季地表温度达75°C，孙悟空借芭蕉扇的故事就发生在这里。'},{ico:'🏺',bg:'#6B4A1A',title:'高昌古国',desc:'高昌国是唐代西域强国，玄奘西行在此停留一个月，故城遗址保存完好。'},{ico:'💧',bg:'#1A4A5C',title:'坎儿井奇迹',desc:'2000年前先民挖出总长5000公里的地下水利系统，在极旱盆地至今仍在使用。'}],default:[{ico:'🎵',bg:'#1A4A3A',title:'新疆音乐',desc:'都塔尔、热瓦普、手鼓是维吾尔音乐的灵魂，每个村庄都有自己的乐手和歌手。'},{ico:'💍',bg:'#7A3A1A',title:'维吾尔婚礼',desc:'婚礼通常持续三天，全村人共同参与，麦西来甫歌舞通宵不停，仪式感极强。'},{ico:'🏺',bg:'#245C48',title:'丝路遗迹',desc:'新疆境内有60余处汉唐遗址，至今仍不断有新的考古发现，历史极为厚重。'}]};
+
+const places={sight:{wlmq:[{n:'新疆国际大巴扎',g:'#1A4A3A',desc:'世界最大集市之一，伊斯兰建筑群，干果、手工艺品、民族服饰应有尽有。',door:'<b>傍晚5–8点</b>最热闹，能看到本地人真实生活状态。',stars:5,addr:'乌鲁木齐市天山区解放南路',tel:'0991-2305000',review:'建议先爬上二楼回廊俯瞰全景再下来逛。干果要试吃再买，不要被包装盒骗了。',reviewer:'@大众点评 背包客小马'},{n:'新疆维吾尔自治区博物馆',g:'#245C48',desc:'免费，内有楼兰美女古尸和五星出东方汉代织锦，新疆历史必看。',door:'<b>需提前网上预约</b>，周一闭馆，留2–3小时参观。',stars:5,addr:'乌鲁木齐市沙依巴克区西北路132号',tel:'0991-4535313',review:'楼兰美女保存得太完好了，2000年前的人栩栩如生。五星出东方织锦实物比图片精美得多。',reviewer:'@微博 历史控小吴'}],ks:[{n:'喀什古城',g:'#7A3A1A',desc:'5A景区，世界现存最大生土建筑群，迷宫式街巷，2000年历史活城区。',door:'<b>傍晚进去最美</b>，人少光线好，巷子里藏着民宿和当地小馆。',stars:5,addr:'喀什市喀什古城景区',tel:'0998-2586001',review:'不要跟团，自己走才有感觉。拿着地图随便进一条巷子都是惊喜，完全不会走同一条路出来。',reviewer:'@小红书 流浪的胡杨'},{n:'艾提尕尔清真寺',g:'#8C3A1A',desc:'中国最大清真寺，建于1442年，广场是喀什人的日常聚集地。',door:'<b>非礼拜时间</b>均可参观，广场上的老人和鸽子才是最值得看的风景。',stars:4,addr:'喀什市解放北路',tel:'0998-2822002',review:'进寺要脱鞋，有时会有信徒礼拜保持安静。广场的鸽子和老人是经典画面，自带故事感。',reviewer:'@携程 丝路行者'}]},food:{default:[{n:'大盘鸡',g:'#8C3A1A',desc:'新疆第一名菜，鸡块土豆在红油里同烧，吃到底必须加皮带面拌汤汁。',door:'发源<b>沙湾县</b>，加面是免费的，必须加，这才是完整的一盘。',stars:5,addr:'全疆均有，乌市推荐二道桥附近',tel:'推荐：老沙湾大盘鸡 0991-3558888',review:'外地人第一次吃大概率会爱上。注意面要趁热拌，放凉了容易坨，汤汁别浪费。',reviewer:'@大众点评 吃货鉴定师'},{n:'手抓饭',g:'#C9922A',desc:'羊肉、黄胡萝卜、皮牙子用羊油焖出的油亮米饭，维吾尔人喜事必备。',door:'配一碗<b>酸奶</b>最解腻，是标准吃法。饭点前去，晚了会卖完。',stars:5,addr:'喀什、伊宁各大巴扎附近',tel:'推荐：老巴依手抓饭 0998-2511888',review:'用手抓着吃才香。羊肉软烂不膻，米饭油亮有光泽，配酸奶刚好中和，强烈推荐。',reviewer:'@小红书 新疆美食探店'}]},drink:{default:[{n:'咸奶茶配奶皮子',g:'#C9922A',desc:'新疆奶茶是咸的，加奶皮子和馕一起泡，是本地人的早餐标配。',door:'找<b>本地清真早餐铺</b>，不要去旅游景区卖的甜奶茶，那不是正宗的。',stars:5,addr:'各城市维吾尔早餐铺，乌市推荐二道桥巷子',tel:'无固定推荐，找本地人多的店',review:'第一次喝咸奶茶可能不习惯，但泡着馕吃会上瘾。奶皮子捞起来单独吃，香醇浓厚。',reviewer:'@小红书 早餐控'},{n:'马奶酒',g:'#4A2A6C',desc:'哈萨克传统发酵饮品，微酸微甜，酒精度低，草原待客之礼。',door:'要在<b>牧民家或哈萨克餐厅</b>喝才正宗，景区卖的多是工业版。',stars:4,addr:'伊犁、阿勒泰哈萨克族聚居区',tel:'推荐：那拉提牧民家访体验',review:'比想象中好喝，有点像酸奶发酵的味道。度数不高，但喝多了肚子会翻腾，适量。',reviewer:'@携程 草原探访者'}]},shop:{default:[{n:'干果坚果',g:'#C9922A',desc:'葡萄干、巴旦木、和田大枣、纸皮核桃，新疆送礼首选，品类最全。',door:'大巴扎<b>散称比礼盒划算</b>，可先试吃再买，马奶子葡萄干和绿香妃最好吃。',stars:5,addr:'乌市：国际大巴扎一楼干果区；喀什：东门大巴扎',tel:'大巴扎总台：0991-2305000',review:'一定要散称，礼盒装贵一倍还没新鲜。巴旦木买盐焗的，葡萄干认马奶子。',reviewer:'@大众点评 伴手礼研究所'},{n:'艾德莱斯绸',g:'#B83232',desc:'维吾尔扎染丝绸，流动水纹纹样，做围巾或包包都很好看。',door:'伊宁和喀什都有正宗的，认手感、<b>看染色是否均匀</b>，真丝比化纤贵但值。',stars:4,addr:'喀什：老城手工艺一条街；伊宁：伊犁河谷民俗街',tel:'推荐：古丽斯坦丝绸工坊 0998-2581234',review:'颜色太漂亮了，买了两条。建议去工坊直接买，比景区摊位便宜，还能看到织造过程。',reviewer:'@小红书 民族风穿搭'}]},stay:{default:[{n:'那拉提草原蒙古包',g:'#1A4A3A',desc:'景区内住宿，蒙古包或木屋，推开窗就是草原，夜晚可看星星。',door:'旺季<b>提前2周预订</b>，蒙古包比木屋便宜但隔音差，带耳塞。',stars:4,addr:'伊犁新源县那拉提景区内',tel:'预订：0999-7823168',review:'住蒙古包体验感满分，床比较硬，睡眠浅的要注意。早起看日出值回票价，4:30就天亮了。',reviewer:'@携程 草原驻留者'},{n:'喀什老城精品民宿',g:'#7A3A1A',desc:'百年老宅改造，庭院式布局，睡在古城核心区，体验感最强。',door:'选评分<b>4.8分以上</b>的；提前说需求，有的民宿主人会帮你安排当地向导。',stars:5,addr:'喀什古城核心区（艾提尕尔清真寺步行5分钟）',tel:'推荐：古城花园精品客栈 0998-2513456',review:'早上推开窗能听到宣礼声，喝着主人泡的奶茶，感觉穿越到了另一个时代。强烈推荐。',reviewer:'@小红书 慢旅行研究员'}]}};
+
+const itinData=[{day:1,stops:[{n:'乌鲁木齐落地',cat:'交通',t:'14:00',end:'—',dur:'',dot:'#8C7A65'},{n:'新疆国际大巴扎',cat:'景点·购物',t:'15:30',end:'18:00',dur:'2.5h',dot:'#1A4A3A'},{n:'楼兰秘烤（晚餐）',cat:'美食·烤肉',t:'19:00',end:'20:30',dur:'',dot:'#B83232'}]},{day:2,stops:[{n:'出发前往伊犁',cat:'交通',t:'08:00',end:'12:00',dur:'',dot:'#8C7A65',tr:'🚗 乌鲁木齐→伊犁 约4小时'},{n:'那拉提草原',cat:'景点·骑马',t:'13:30',end:'17:30',dur:'4h',dot:'#1A4A3A'},{n:'哈萨克民宿入住',cat:'住宿',t:'19:00',end:'—',dur:'',dot:'#C9922A'}]},{day:3,stops:[{n:'薰衣草花田（霍城）',cat:'景点·打卡',t:'08:30',end:'11:00',dur:'2.5h',dot:'#4A2A6C'},{n:'赛里木湖',cat:'景点·徒步',t:'13:00',end:'17:00',dur:'4h',dot:'#1A4A5C'},{n:'湖边烤全羊（晚餐）',cat:'美食',t:'18:30',end:'20:00',dur:'',dot:'#B83232'}]}];
+
+const posts=[{title:'秋天的喀纳斯，我哭了',season:'🍂 秋季',g:'#2A5C3E',preview:'9月28号到的，白桦树已经全黄了，禾木的晨雾配上金色的木屋，手机根本拍不出那种感觉……',author:'旅行的鱼儿',route:'乌鲁木齐→可可托海→喀纳斯→禾木 · 5天',likes:234,saves:89},{title:'第一次新疆：我犯了哪些错',season:'☀️ 夏季',g:'#1A4A3A',preview:'行程排太满、住宿没提前订、低估了车程……花7天总结出这份新手避坑清单，希望帮到你们。',author:'新手背包客',route:'北疆大环线 · 7天',likes:567,saves:312},{title:'南疆美食深度探店：我吃了15天',season:'🍂 秋季',g:'#7A3A1A',preview:'从乌鲁木齐到喀什，专门为了吃而去。楼兰秘烤、馕坑肉、各种巴扎小吃……每天都在撑着肚子走路。',author:'美食地图小姐姐',route:'南疆美食专线 · 15天',likes:891,saves:445},{title:'冬天的禾木，比夏天还美',season:'❄️ 冬季',g:'#1A3A5C',preview:'所有人都说夏秋去喀纳斯，但冬天更值得去。雪后的禾木安静得像另一个世界，游客只有夏天的十分之一。',author:'雪地摄影师老王',route:'阿勒泰→禾木雪乡 · 5天',likes:445,saves:198}];
+
+const aiQA={'帮我规划5天秋季南疆路线':'好的！秋季南疆绝对值得 🍂\n\n**Day 1** 乌鲁木齐落地 → 夜间大巴扎打卡\n**Day 2** 飞喀什（约1.5h）→ 老城漫步 → 晚餐馕坑肉\n**Day 3** 艾提尕尔清真寺 → 高台民居 → 英吉沙小刀一条街\n**Day 4** 包车前往卡拉库里湖（约4h）→ 慕士塔格峰观景\n**Day 5** 喀什自由市集 → 买干果特产 → 飞回\n\n⚠️ 秋季南疆白天约24°C，早晚温差大，带件厚外套。','去新疆必吃哪些美食？':'新疆必吃清单 🍽\n\n🥇 **大盘鸡**：发源沙湾，吃到底必须加皮带面拌汤汁\n🥇 **手抓饭**：羊肉黄萝卜焖饭，配一碗酸奶解腻\n🥈 **红柳烤肉**：红柳枝穿大块羊肉，比普通串香\n🥈 **烤包子**：馕坑贴烤，咬开一包羊肉汁\n🥉 **拌面（拉条子）**：手工抻面，加面免费喊一声就行\n🥉 **馕**：配咸奶茶最地道，早餐标配','冬季去阿勒泰滑雪怎么安排？':'阿勒泰是中国粉雪圣地 ❄️\n\n**推荐5天行程**\n• 乌鲁木齐飞阿勒泰（1h）\n• 将军山滑雪场：初中级道最全，大众首选\n• 可可托海：滑雪+地质奇观两不误\n• 禾木雪乡：图瓦木屋+炊烟，最美新疆冬天\n\n⚠️ 12–2月气温-20°C以下，保暖要专业级别\n⚠️ 住宿提前3周预订，旺季一房难求','北疆和南疆怎么选？':'两边完全不同风格 🗺\n\n**北疆**：自然风光为主\n草原、湖泊、雪山、滑雪\n代表：伊犁、喀纳斯、阿勒泰\n最佳：夏（绿）秋（金）冬（雪）\n\n**南疆**：人文历史为主\n古城、集市、丝路文化、沙漠\n代表：喀什、库车、和田\n最佳：春秋（避开夏季极热）\n\n**馕途建议**：超过7天南北疆各取精华；5天以内选一个深入玩，别贪多。','新疆旅行要准备什么？':'新疆旅行打包清单 🎒\n\n**必带**\n• 身份证（全程检查站需要）\n• 防晒霜SPF50+（紫外线极强）\n• 冲锋衣（即使夏天昼夜温差大）\n• 保湿护肤品（气候极干燥）\n\n**推荐带**\n• 墨镜、遮阳帽\n• 现金（部分地区网络差）\n• 充电宝\n• 胃药（饮食油腻初来可能不适应）\n\n**不需要带**\n• 雨伞（新疆极少下雨）'};
+
+const DIFY_API_KEY='app-90Uj71MAy7eyss8QEjk7NgAU';
+const DIFY_ENDPOINT='https://api.dify.ai/v1/chat-messages';
+const DIFY_AGENT_ROLE='阿达西';
+let conversationId=null;
+
+let curSeason='summer',curCity='wlmq',curDim='sight',dragSrc=null;
+
+function scenicImage(label=''){
+  const routePhotos={
+    '吐鲁番春色·东疆快线':'assets/route-spring-turpan.jpg',
+    '伊犁花海·塞外江南':'assets/route-spring-ili.jpg',
+    '东天山环线·春意盎然':'assets/route-spring-tianshan.jpg',
+    '乌鲁木齐精华·城市初探':'assets/route-summer-urumqi.jpg',
+    '北疆伊犁·草原湖泊':'assets/route-summer-ili.jpg',
+    '北疆精华大环线':'assets/route-summer-kanas.jpg',
+    '吐鲁番秋收·瓜果飘香':'assets/route-autumn-turpan.jpg',
+    '北疆金秋·喀纳斯秋色':'assets/route-autumn-kanas.jpg',
+    '南疆人文·古城丝路':'assets/route-autumn-pamir.jpg',
+    '乌鲁木齐冰雪·城市暖冬':'assets/route-winter-urumqi.jpg',
+    '阿勒泰滑雪·粉雪天堂':'assets/route-winter-altay.jpg',
+    '北疆冰雪大环线':'assets/route-winter-sayram.jpg'
+  };
+  const matched=Object.keys(routePhotos).find(name=>label.includes(name));
+  if(matched)return routePhotos[matched];
+  if(/喀什|古城|丝路|南疆|大盘鸡|手抓饭|干果|艾德莱斯/.test(label))return 'assets/kashgar-old-city.jpg';
+  if(/秋|喀纳斯|禾木|可可托海|木屋|图瓦/.test(label))return 'assets/hemu-autumn.jpg';
+  if(/赛里木|伊犁|那拉提|草原|天池|湖|薰衣草/.test(label))return 'assets/sayram-lake.jpg';
+  return 'assets/xinjiang-hero.jpg';
+}
+function scenicStyle(label,color,shade='.36'){
+  return `background-color:${color};background-image:linear-gradient(180deg,rgba(12,27,22,.04),rgba(12,27,22,${shade})),url('${scenicImage(label)}')`;
+}
+
+function renderRoutes(){
+  document.getElementById('routeGrid').innerHTML=(routes[curSeason]||[]).map(r=>`
+    <div class="route-card" onclick="useRoute()">
+      <div class="rc-cap" style="${scenicStyle(r.name+' '+r.route,r.g,'.54')}"><span class="rc-days">${r.days}天${r.days-1}夜</span></div>
+      <div class="rc-body">
+        <div class="rc-name">${r.name}</div>
+        <div class="rc-route">📍 ${r.route}</div>
+        <div class="rc-tags">${r.tags.map(t=>`<span class="rc-tag">${t}</span>`).join('')}<span class="rc-tag s">🗓 ${r.season}</span></div>
+        <div class="rc-footer"><span class="cost">预估 <b>${r.cost}</b></span><button class="rc-btn">加入行程</button></div>
+      </div>
+    </div>`).join('');
+}
+function useRoute(){showToast('路线已加入行程，可在「我的行程」中自定义修改');setTimeout(()=>switchTab('itinerary'),700);}
+
+function renderCityGroups(){
+  document.getElementById('cityGroups').innerHTML=Object.entries(cities).map(([region,list])=>`
+    <div class="city-region">${region}</div>
+    <div class="city-selector">${list.map(c=>`<button class="city-btn ${c.id===curCity?'on':''}" onclick="selectCity('${c.id}')" title="${c.note}">${c.name}</button>`).join('')}</div>`).join('');
+}
+function selectCity(id){curCity=id;renderCityGroups();renderCultureCards();renderPlaces();}
+
+function renderCultureCards(){
+  const data=culture[curCity]||culture.default;
+  const cname=Object.values(cities).flat().find(c=>c.id===curCity)?.name||'';
+  document.getElementById('cultureSection').innerHTML=`
+    <div class="culture-section">
+      <div class="cs-head">${cname} · 历史与文化</div>
+      <div class="culture-grid">${data.map(c=>`
+        <div class="culture-card">
+          <div class="cc-top" style="${scenicStyle(c.title,c.bg,'.32')}">${c.ico}</div>
+          <div class="cc-body"><div class="cc-title">${c.title}</div><div class="cc-desc">${c.desc}</div></div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderPlaces(){
+  const data=places[curDim]?.[curCity]||places[curDim]?.default||[];
+  document.getElementById('placeGrid').innerHTML=data.length?data.map(p=>`
+    <div class="place-card">
+      <div class="pc-top" style="${scenicStyle(p.n,p.g,'.48')}"><h4>${p.n}</h4></div>
+      <div class="pc-body">
+        <div class="pc-desc">${p.desc}</div>
+        <div class="pc-door">${p.door}</div>
+        <div class="pc-meta">
+          <div class="pc-meta-row"><b>评分</b><span class="pc-stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</span></div>
+          <div class="pc-meta-row"><b>地址</b><span>${p.addr}</span></div>
+          <div class="pc-meta-row"><b>电话</b><span>${p.tel}</span></div>
+        </div>
+        <div class="pc-review">${p.review}<div class="reviewer">${p.reviewer}</div></div>
+        <button class="add-itin-btn" onclick="addToItin('${p.n}',this)">＋ 加入行程</button>
+      </div>
+    </div>`).join(''):`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-soft);font-size:12.5px;">该维度内容持续更新中 🏗</div>`;
+}
+function addToItin(n,btn){btn.classList.add('added');btn.textContent='✓ 已加入';showToast(`「${n}」已加入行程`);}
+function renderDimTabs(){document.querySelectorAll('.dtab').forEach(b=>{b.classList.toggle('on',b.dataset.dim===curDim);b.onclick=()=>{curDim=b.dataset.dim;renderDimTabs();renderPlaces();};});}
+
+function renderItinerary(){
+  document.getElementById('itinDays').innerHTML=itinData.map((day,di)=>`
+    <div class="day-block">
+      <div class="day-head"><span class="dnum">第 ${day.day} 天</span><span class="ddate">Day ${day.day}</span></div>
+      <div id="di${di}">${day.stops.map((s,si)=>stopHTML(s,di,si,day.stops.length)).join('')}</div>
+    </div>`).join('');
+  bindDrag();
+}
+function stopHTML(s,di,si,total){
+  return `<div class="stop" draggable="true" data-di="${di}" data-si="${si}">
+    <div class="stop-time">
+      <span class="t1" onclick="editTime(this)">${s.t}</span>
+      ${s.end&&s.end!=='—'?`<span class="t2">→${s.end}</span>`:''}
+    </div>
+    <div class="stop-dot-col">
+      <div class="stop-dot" style="background:${s.dot}"></div>
+      ${si<total-1?'<div class="stop-line"></div>':''}
+    </div>
+    <div class="stop-info">
+      <h4>${s.n}</h4><div class="cat">${s.cat}</div>
+      ${s.dur?`<div class="dur">⏱ 约${s.dur}</div>`:''}
+      ${s.tr?`<div class="tr">${s.tr}</div>`:''}
+    </div>
+    <div class="stop-drag">⠿</div>
+  </div>`;
+}
+function editTime(el){
+  el.contentEditable='true';el.focus();
+  const sel=window.getSelection(),r=document.createRange();r.selectNodeContents(el);sel.removeAllRanges();sel.addRange(r);
+  function done(){el.contentEditable='false';showToast('时间已更新');el.removeEventListener('blur',done);el.removeEventListener('keydown',kd);}
+  function kd(e){if(e.key==='Enter'){e.preventDefault();done();}}
+  el.addEventListener('blur',done);el.addEventListener('keydown',kd);
+}
+function bindDrag(){
+  document.querySelectorAll('.stop').forEach(el=>{
+    el.addEventListener('dragstart',e=>{dragSrc=el;el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    el.addEventListener('dragend',()=>{el.classList.remove('dragging');document.querySelectorAll('.stop').forEach(x=>x.classList.remove('drag-over'));});
+    el.addEventListener('dragover',e=>{e.preventDefault();if(el!==dragSrc)el.classList.add('drag-over');});
+    el.addEventListener('dragleave',()=>el.classList.remove('drag-over'));
+    el.addEventListener('drop',e=>{e.preventDefault();if(el===dragSrc)return;const di=+el.dataset.di,si=+el.dataset.si,sdi=+dragSrc.dataset.di,ssi=+dragSrc.dataset.si;if(di===sdi){const s=itinData[di].stops;const[m]=s.splice(ssi,1);s.splice(si,0,m);renderItinerary();showToast('顺序已更新');}});
+  });
+}
+
+function renderCommunity(){
+  document.getElementById('postGrid').innerHTML=posts.map(p=>`
+    <div class="post-card">
+      <div class="post-cap" style="${scenicStyle(p.title+' '+p.route,p.g,'.5')}"><span class="psn">${p.season}</span></div>
+      <div class="post-body">
+        <h4>${p.title}</h4>
+        <div class="post-preview">${p.preview}</div>
+        <div class="post-route">路线：<b>${p.route}</b></div>
+        <div class="post-meta" style="margin-top:7px;">
+          <div class="post-author"><div class="av">👤</div>${p.author}</div>
+          <div class="post-stats"><span>❤️ ${p.likes}</span><span>🔖 ${p.saves}</span></div>
+        </div>
+        <button class="use-route-btn" onclick="showToast('路线已复制到我的行程')">复用这条路线</button>
+      </div>
+    </div>`).join('');
+  document.querySelectorAll('#postFilters .pf-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#postFilters .pf-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');}));
+}
+
+async function sendMsg(){
+  const inp=document.getElementById('chatInput');
+  const q=inp.value.trim();
+  if(!q) return;
+
+  appendMsg('user',q);
+  inp.value='';
+  disableInput(true);
+  const aiBubble=appendMsg('ai','正在连接 Dify AI，请稍候…');
+
+  const payload={
+    query:q,
+    inputs:{
+      role:DIFY_AGENT_ROLE,
+      city:'乌鲁木齐'
+    },
+    response_mode:'streaming',
+    user:'nantu-web-user-001'
+  };
+  if(conversationId) payload.conversation_id=conversationId;
+
+  const controller=new AbortController();
+  const timeoutId=setTimeout(()=>controller.abort(),30000);
+  try{
+    const res=await fetch(DIFY_ENDPOINT,{
+      method:'POST',
+      mode:'cors',
+      cache:'no-store',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${DIFY_API_KEY}`,
+        'Accept':'text/event-stream'
+      },
+      body:JSON.stringify(payload),
+      signal:controller.signal
+    });
+    clearTimeout(timeoutId);
+    if(!res.ok){
+      const errText=await res.text();
+      throw new Error(`Dify ${res.status}: ${errText}`);
+    }
+    if(!res.body) throw new Error('Dify 未返回流式响应');
+
+    const reader=res.body.getReader();
+    const decoder=new TextDecoder();
+    let buffer='';
+    let currentEvent='';
+    let accumulated='';
+    let messageEnded=false;
+
+    function processEvent(eventText){
+      const trimmed=eventText.trim();
+      if(!trimmed || trimmed==='[DONE]') return;
+      try{
+        const obj=JSON.parse(trimmed);
+        if(obj.conversation_id) conversationId=obj.conversation_id;
+        if((obj.event==='agent_message'||obj.event==='message') && typeof obj.answer==='string'){
+          if(obj.answer.length>=accumulated.length && obj.answer.startsWith(accumulated)){
+            accumulated=obj.answer;
+          } else {
+            accumulated += obj.answer;
+          }
+          updateLastAIBubble(aiBubble,accumulated);
+        }
+        if(obj.event==='message_end'){
+          messageEnded=true;
+        }
+      }catch(e){ }
+    }
+
+    while(true){
+      const {value,done}=await reader.read();
+      if(done) break;
+      buffer += decoder.decode(value,{stream:true});
+      let idx;
+      while((idx=buffer.indexOf('\n'))!==-1){
+        const line=buffer.slice(0,idx).trim();
+        buffer=buffer.slice(idx+1);
+        if(line===''){
+          processEvent(currentEvent);
+          currentEvent='';
+          if(messageEnded) break;
+        } else if(line.startsWith('data:')){
+          currentEvent += line.slice(5).trim();
+        }
+      }
+      if(messageEnded) break;
+    }
+    if(buffer.trim()){
+      if(buffer.startsWith('data:')) currentEvent += buffer.slice(5).trim();
+      else currentEvent += buffer.trim();
+    }
+    if(currentEvent) processEvent(currentEvent);
+    if(!accumulated) updateLastAIBubble(aiBubble,'Dify 未返回回答，请稍后再试。');
+  }catch(err){
+    if(err.name==='AbortError'){
+      updateLastAIBubble(aiBubble,'AI 请求超时，请检查网络或稍后重试。');
+    } else {
+      updateLastAIBubble(aiBubble,`AI 请求失败：${err.message}`);
+    }
+  }finally{
+    clearTimeout(timeoutId);
+    disableInput(false);
+  }
+}
+
+function appendMsg(role,text){
+  const m=document.getElementById('chatMsgs');
+  const d=document.createElement('div');
+  d.className=`msg ${role}`;
+  d.innerHTML=`<div class="msg-av">${role==='ai'?'🤖':'👤'}</div><div class="msg-bubble">${text}</div>`;
+  m.appendChild(d);
+  m.scrollTop=m.scrollHeight;
+  if(role==='ai') activeAIMessageElement=d;
+  return d;
+}
+function updateLastAIBubble(el,text){
+  if(!el) return;
+  const bubble=el.querySelector('.msg-bubble');
+  if(bubble){
+    bubble.innerHTML=text.replace(/\n/g,'<br>');
+    const m=document.getElementById('chatMsgs');
+    m.scrollTop=m.scrollHeight;
+  }
+}
+function disableInput(disable){
+  const inp=document.getElementById('chatInput');
+  const btn=document.querySelector('.send-btn');
+  if(inp) inp.disabled=disable;
+  if(btn){
+    btn.disabled=disable;
+    btn.textContent=disable?'思考中…':'发送';
+  }
+}
+function askQ(btn){document.getElementById('chatInput').value=btn.textContent;sendMsg();}
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}});
+
+const tabMeta={discover:{title:'发现路线',sub:'按季节选择热门路线'},itinerary:{title:'我的行程',sub:'北疆夏季 7天6夜 · 可自定义'},destination:{title:'目的地详情',sub:'文化 · 景点 · 美食 · 饮品 · 购物 · 住宿'},community:{title:'旅行记录',sub:'真实游记 · 轻量社区'},ai:{title:'AI 规划助手',sub:'智能对话 · 定制专属路线'}};
+function switchTab(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.sb-nav button[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
+  const m=tabMeta[id];document.getElementById('topTitle').textContent=m.title;document.getElementById('topSub').textContent=m.sub;
+  if(id==='destination'){renderCityGroups();renderDimTabs();renderCultureCards();renderPlaces();}
+  if(id==='community')renderCommunity();
+}
+document.querySelectorAll('.sb-nav button[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+
+const slabels={spring:'Spring Routes',summer:'Summer Routes',autumn:'Autumn Routes',winter:'Winter Routes'};
+function setSeason(s){curSeason=s;document.querySelectorAll('.stab,.season-pill').forEach(b=>b.classList.toggle('on',b.dataset.s===s));document.getElementById('seasonLabel').textContent=slabels[s];renderRoutes();}
+document.querySelectorAll('.stab').forEach(b=>b.addEventListener('click',()=>setSeason(b.dataset.s)));
+document.querySelectorAll('.season-pill').forEach(b=>b.addEventListener('click',()=>setSeason(b.dataset.s)));
+
+let tt;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800);}
+function showModal(){document.getElementById('modalBg').classList.add('open');}
+function closeModal(e){if(!e||e.target===document.getElementById('modalBg'))document.getElementById('modalBg').classList.remove('open');}
+function copyLink(){showToast('链接已复制');closeModal();}
+
+renderRoutes();renderItinerary();renderCityGroups();renderDimTabs();renderCultureCards();renderPlaces();renderCommunity();
+</script>
+</body>
+</html>
