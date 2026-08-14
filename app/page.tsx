@@ -34,27 +34,40 @@ export default function Home() {
       <section className="work section clean-section" id="work">
         <div className="section-heading reveal visible"><p className="section-mark">02 · SELECTED WORK</p><h2>精选项目</h2><p className="section-claim">从问题出发，<br/>让方案走向真实场景。</p><p className="body-copy">这里收录我参与和主导的 AI 产品项目，记录从需求发现、方案设计到验证迭代的完整过程。</p></div>
         <div className="project-grid">
-          <article className="project-card reveal visible">
+          <a className="project-card reveal visible" href="#school-project" aria-label="打开考研择校择专业 AI 顾问项目与 Demo">
             <div className="project-cover cover-education"><span className="cover-index">CASE 01</span><div className="cover-window"><i/><i/><i/><strong>AI ADVISOR</strong></div></div>
-            <div className="project-content"><div className="project-topline"><span>AI 产品项目</span><time>2024 年 9 月</time></div><h3>考研择校择专业 AI 顾问</h3><p>用“规则引擎 + RAG + LLM”把顾问经验产品化，通过多轮追问，为管综 199 考生生成冲刺、稳妥、保底的个性化择校方案。</p><ul className="project-tags"><li>多轮对话</li><li>RAG</li><li>规则引擎</li><li>Bad Case</li></ul><div className="project-footer"><span>角色：AI 产品经理 · 管综199</span><a href="#school-demo">体验 Demo →</a></div></div>
-          </article>
-          <article className="project-card reveal visible">
+            <div className="project-content"><div className="project-topline"><span>AI 产品项目</span><time>2024 年 9 月</time></div><h3>考研择校择专业 AI 顾问</h3><p>用“规则引擎 + RAG + LLM”把顾问经验产品化，通过多轮追问，为管综 199 考生生成冲刺、稳妥、保底的个性化择校方案。</p><ul className="project-tags"><li>多轮对话</li><li>RAG</li><li>规则引擎</li><li>Bad Case</li></ul><div className="project-footer"><span>角色：AI 产品经理 · 管综199</span><strong>体验 Demo →</strong></div></div>
+          </a>
+          <a className="project-card reveal visible" href="#essay-project" aria-label="打开考研英语作文 AI 批改项目与 Demo">
             <div className="project-cover cover-knowledge"><span className="cover-index">CASE 02</span><div className="cover-orbit"><i/><i/><i/></div></div>
-            <div className="project-content"><div className="project-topline"><span>AI 产品项目</span><time>已全量上线</time></div><h3>考研英语作文 AI 批改</h3><p>将人工批改重构为“OCR 识别 + 规则校验 + LLM 五维评分 + 人工兜底”，让大部分作文在几分钟内获得可追溯讲评。</p><ul className="project-tags"><li>OCR</li><li>LLM 评测</li><li>Rubric</li><li>人机协同</li></ul><div className="project-footer"><span>角色：AI 产品经理 · 独立负责</span><a href="#essay-demo">体验 Demo →</a></div></div>
-          </article>
-          <article className="project-card reveal visible">
+            <div className="project-content"><div className="project-topline"><span>AI 产品项目</span><time>已全量上线</time></div><h3>考研英语作文 AI 批改</h3><p>将人工批改重构为“OCR 识别 + 规则校验 + LLM 五维评分 + 人工兜底”，让大部分作文在几分钟内获得可追溯讲评。</p><ul className="project-tags"><li>OCR</li><li>LLM 评测</li><li>Rubric</li><li>人机协同</li></ul><div className="project-footer"><span>角色：AI 产品经理 · 独立负责</span><strong>体验 Demo →</strong></div></div>
+          </a>
+          <a className="project-card reveal visible" href={`${originalSite}/demos/nantu/`} target="_blank" rel="noreferrer" aria-label="打开馕途新疆深度旅行规划 Demo">
             <div className="project-cover cover-lab"><span className="cover-index">CASE 03</span><div className="cover-grid"><i/><i/><i/><i/></div></div>
-            <div className="project-content"><div className="project-topline"><span>AI Demo</span><time>Vibe Coding</time></div><h3>馕途 · 新疆深度旅行规划</h3><p>一站式新疆旅行规划原型，涵盖路线推荐、景点攻略、美食住宿与季节玩法，用 vibe coding 快速验证 AI 旅行助手体验。</p><ul className="project-tags"><li>AI 原型</li><li>旅行规划</li><li>交互 Demo</li></ul><div className="project-footer"><span>角色：独立探索</span><a href={`${originalSite}/demos/nantu/`} target="_blank" rel="noreferrer">体验 Demo →</a></div></div>
-          </article>
+            <div className="project-content"><div className="project-topline"><span>AI Demo</span><time>Vibe Coding</time></div><h3>馕途 · 新疆深度旅行规划</h3><p>一站式新疆旅行规划原型，涵盖路线推荐、景点攻略、美食住宿与季节玩法，用 vibe coding 快速验证 AI 旅行助手体验。</p><ul className="project-tags"><li>AI 原型</li><li>旅行规划</li><li>交互 Demo</li></ul><div className="project-footer"><span>角色：独立探索</span><strong>体验 Demo →</strong></div></div>
+          </a>
         </div>
+      </section>
 
-        <div className="project-demo" id="school-demo">
-          <div className="project-demo-head"><span>CASE 01 · INTERACTIVE PROTOTYPE</span><p>基于真实产品架构制作的简化演示，院校数据均为 Mock 数据。</p></div>
-          <div className="demo-shell"><CombinedDemo/></div>
+      <section className="project-modal" id="school-project" role="dialog" aria-modal="true" aria-labelledby="school-project-title">
+        <a className="project-modal-backdrop" href="#work" aria-label="关闭项目详情"/>
+        <div className="project-modal-panel">
+          <header className="project-modal-header">
+            <div><p>CASE 01 · INTERACTIVE PROTOTYPE</p><h2 id="school-project-title">考研择校择专业 AI 顾问</h2><span>30 余场顾问访谈驱动分步追问设计；对话完成率约 42% → 65%，Bad Case 率约 18% → 8%。院校数据均为 Mock 数据。</span></div>
+            <a className="project-modal-close" href="#work" aria-label="关闭项目详情">×</a>
+          </header>
+          <div className="demo-stage"><CombinedDemo/></div>
         </div>
-        <div className="project-demo" id="essay-demo">
-          <div className="project-demo-head"><span>CASE 02 · INTERACTIVE PROTOTYPE</span><p>可完整体验 OCR 置信度确认、五维评分、规则校验与转人工流程。</p></div>
-          <div className="demo-shell"><EssayDemo/></div>
+      </section>
+
+      <section className="project-modal" id="essay-project" role="dialog" aria-modal="true" aria-labelledby="essay-project-title">
+        <a className="project-modal-backdrop" href="#work" aria-label="关闭项目详情"/>
+        <div className="project-modal-panel">
+          <header className="project-modal-header">
+            <div><p>CASE 02 · INTERACTIVE PROTOTYPE</p><h2 id="essay-project-title">考研英语作文 AI 批改</h2><span>在 300 篇固定评测集上，将 AI 与教研评分平均绝对分差由约 3 分收窄至 1.5 分；低置信度结果自动转人工复核。</span></div>
+            <a className="project-modal-close" href="#work" aria-label="关闭项目详情">×</a>
+          </header>
+          <div className="demo-stage"><EssayDemo/></div>
         </div>
       </section>
 

@@ -91,7 +91,7 @@ h2 { font-size: clamp(50px, 5vw, 72px); line-height: 1.2; }
 .project-tags li { padding: 5px 9px; color: var(--green-dark); background: rgba(95, 118, 89, 0.09); font-size: 11px; }
 .project-footer { padding-top: 18px; display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); font-size: 12px; }
 .project-footer span { color: var(--soft); }
-.project-footer a { color: var(--green-dark); font-weight: 600; text-decoration: none; }
+.project-footer a, .project-footer strong { color: var(--green-dark); font-weight: 600; text-decoration: none; }
 .insights { display: flex; justify-content: flex-start; align-items: center; }
 .insights::after { background: linear-gradient(90deg, rgba(246, 245, 240, 0.98) 0px, rgba(246, 245, 240, 0.98) 56%, rgba(246, 245, 240, 0.7) 74%, transparent); }
 .insights-panel { width: min(78vw, 1080px); padding: 55px; background: rgba(249, 248, 244, 0.74); backdrop-filter: blur(3px); }
@@ -210,10 +210,26 @@ html.leaf-cursor-enabled, html.leaf-cursor-enabled * { cursor: none !important; 
   .brush-cursor { display: none; }
 }
 
-/* Inline demo containers: preserve the original portfolio language. */
-.project-demo { grid-column: 1 / -1; margin: 0 0 clamp(72px, 9vw, 128px); }
-.project-demo-head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; padding:26px 0 16px; border-top:1px solid var(--line); }
-.project-demo-head span { font-size:.68rem; letter-spacing:.16em; font-weight:600; text-transform:uppercase; color:var(--accent); }
-.project-demo-head p { margin:0; color:var(--muted); font-size:.78rem; }
-.demo-shell { overflow:hidden; border:1px solid var(--line); border-radius:18px; background:#f8fafc; box-shadow:0 24px 70px rgba(36,55,48,.1); }
-@media (max-width:760px) { .project-demo-head { align-items:flex-start; flex-direction:column; gap:6px; } .demo-shell { border-radius:12px; margin-inline:-8px; } }
+/* Project cards open a contained, in-page demo workspace. */
+a.project-card { color: inherit; text-decoration: none; cursor: pointer; }
+.project-modal { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 20px; }
+.project-modal:target { display: grid; }
+.project-modal-backdrop { position: absolute; inset: 0; background: rgba(25, 33, 28, 0.68); backdrop-filter: blur(8px); }
+.project-modal-panel { position: relative; z-index: 1; width: min(1180px, calc(100vw - 40px)); height: min(900px, calc(100dvh - 40px)); display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; background: rgb(255, 255, 252); border: 1px solid rgba(255, 255, 255, 0.36); box-shadow: 0 28px 90px rgba(20, 28, 23, 0.3); }
+.project-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; padding: 20px 24px 18px; border-bottom: 1px solid var(--line); background: rgba(246, 245, 240, 0.96); }
+.project-modal-header p { margin: 0; color: var(--green); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; }
+.project-modal-header h2 { margin: 5px 0 5px; font-size: clamp(25px, 2.4vw, 36px); line-height: 1.25; letter-spacing: -0.035em; }
+.project-modal-header span { display: block; max-width: 850px; color: var(--soft); font-family: var(--serif); font-size: 13px; line-height: 1.65; }
+.project-modal-close { flex: 0 0 auto; width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 50%; font-size: 25px; line-height: 1; text-decoration: none; transition: color 0.2s, background 0.2s; }
+.project-modal-close:hover { color: rgb(255, 255, 252); background: var(--green-dark); }
+.demo-stage { min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; background: rgb(248, 250, 252); }
+.demo-stage > div { min-height: 100%; }
+.demo-stage h1 { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 1.5rem; font-weight: 600; line-height: 2rem; letter-spacing: 0; }
+@media (max-width: 760px) {
+  .project-modal { padding: 8px; }
+  .project-modal-panel { width: calc(100vw - 16px); height: calc(100dvh - 16px); }
+  .project-modal-header { gap: 12px; padding: 15px 14px 13px; }
+  .project-modal-header h2 { font-size: 23px; }
+  .project-modal-header span { font-size: 11px; }
+  .project-modal-close { width: 34px; height: 34px; }
+}
