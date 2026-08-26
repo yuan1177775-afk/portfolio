@@ -757,16 +757,6 @@ function StudyMenu({ onSelect }) {
   );
 }
 
-/* "学习"tab的路由容器：菜单 ⇄ 英语作文批改功能页，来回切换 */
-function StudyTab() {
-  const [subPage, setSubPage] = useState(null); // null | "writing"
-
-  if (subPage === "writing") {
-    return <EssayGradingFeature onBack={() => setSubPage(null)} />;
-  }
-  return <StudyMenu onSelect={(key) => setSubPage(key)} />;
-}
-
 const TABS = [
   { key: "home", label: "首页", icon: Home },
   { key: "school", label: "择校", icon: GraduationCap },
@@ -783,7 +773,9 @@ export default function App() {
         <PlaceholderScreen title="首页" desc="资讯、社区、热门帖等内容" icon={Home} hint='占位页面，非本次demo重点 · 完整功能见"择校"或"学习"' />
       )}
       {activeTab === "school" && <SchoolSelectionFeature />}
-      {activeTab === "study" && <StudyTab />}
+      {activeTab === "study" && (
+        <PlaceholderScreen title="学习" desc="背单词、题库、学习计划等内容" icon={BookOpen} hint='占位页面，非本次 demo 重点 · 完整功能见“择校”' />
+      )}
       {activeTab === "me" && (
         <PlaceholderScreen title="我的" desc="个人中心、订单、批改历史等内容" icon={User} hint='占位页面，非本次demo重点 · 完整功能见"择校"或"学习"' />
       )}
