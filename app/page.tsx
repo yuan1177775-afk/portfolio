@@ -4,6 +4,7 @@ import InsightsTabs from "./components/InsightsTabs";
 import WatercolorWorld from "./components/WatercolorWorld";
 
 const originalSite = "https://yvanzi.com";
+const literatureAssistantRepo = "https://github.com/yuan1177775-afk/litflow-literature-assistant";
 
 const nowItems = [
   {
@@ -111,6 +112,10 @@ export default function Home() {
             <div className="project-cover cover-lab"><span className="cover-index">CASE 03</span><div className="cover-grid"><i/><i/><i/><i/></div></div>
             <div className="project-content"><div className="project-topline"><span>AI Demo</span><time>Vibe Coding</time></div><h3>馕途 · 新疆深度旅行规划</h3><p>一站式新疆旅行规划原型，涵盖路线推荐、景点攻略、美食住宿与季节玩法，用 vibe coding 快速验证 AI 旅行助手体验。</p><ul className="project-tags"><li>AI 原型</li><li>旅行规划</li><li>交互 Demo</li></ul><div className="project-footer"><span>角色：独立探索</span><strong>体验 Demo →</strong></div></div>
           </a>
+          <a className="project-card reveal visible" href="#literature-assistant-project" aria-label="打开文献实验助手项目介绍与 Demo">
+            <div className="project-cover cover-literature"><span className="cover-index">CASE 04</span><div className="literature-cover-ui"><div className="literature-cover-side"><i/><i/><i/></div><div className="literature-cover-page"><span>RESEARCH</span><strong>文献 → 方法 → 实验</strong><i/><i/><button>问问 AI</button></div></div></div>
+            <div className="project-content"><div className="project-topline"><span>AI 科研工具</span><time>原型验证中</time></div><h3>LitFlow · 文献实验助手</h3><p>面向跨专业研究生，把英文论文转成中文深度解析、实验执行清单和新手分步向导，并允许围绕当前文献随时追问。</p><ul className="project-tags"><li>文献解析</li><li>实验工作流</li><li>上下文对话</li><li>BYOK</li></ul><div className="project-footer"><span>角色：产品设计 · 独立开发</span><strong>查看项目 →</strong></div></div>
+          </a>
         </div>
       </section>
 
@@ -187,6 +192,49 @@ export default function Home() {
             <section className="prototype-section" aria-labelledby="essay-prototype-title">
               <div className="prototype-heading"><div><p className="case-kicker">交互原型</p><h3 id="essay-prototype-title">从作文上传到五维讲评</h3></div><span>可切换作文样例，体验 OCR 核对、评分与人工复核</span></div>
               <div className="demo-stage"><EssayDemo/></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section className="project-modal" id="literature-assistant-project" role="dialog" aria-modal="true" aria-labelledby="literature-assistant-title">
+        <a className="project-modal-backdrop" href="#work" aria-label="关闭项目详情"/>
+        <div className="project-modal-panel literature-project-panel">
+          <header className="project-modal-header">
+            <div><p>CASE 04 · AI RESEARCH PRODUCT</p><h2 id="literature-assistant-title">LitFlow · 文献实验助手</h2></div>
+            <a className="project-modal-close" href="#work" aria-label="关闭项目详情">×</a>
+          </header>
+          <div className="project-modal-scroll">
+            <section className="case-overview" aria-labelledby="literature-overview-title">
+              <div className="case-intro">
+                <p className="case-kicker">项目介绍</p>
+                <h3 id="literature-overview-title">不止“读懂论文”，而是陪研究生一步一步把实验做下去</h3>
+                <p>跨专业研究生常常能理解研究结论，却会卡在“定向突变文库是什么”“材料去哪里找”“下一步具体做什么”。LitFlow 将英文文献解析、实验步骤拆解、权威资源入口和上下文问答串成一条工作流，让用户从理解术语一路走到准备材料、执行动作与检查结果。</p>
+              </div>
+              <dl className="case-facts">
+                <div><dt>目标用户</dt><dd>需要大量阅读英文文献、但对部分实验或生物信息流程不熟悉的研究生</dd></div>
+                <div><dt>核心问题</dt><dd>传统摘要只告诉用户“做什么”，无法继续说明“去哪里找、手里要有什么、下一步怎么做”</dd></div>
+                <div><dt>产品方案</dt><dd>中文深度解析 + 实验清单 + 五阶段新手向导 + 论文上下文对话</dd></div>
+                <div><dt>开放能力</dt><dd>支持站点额度，也允许用户连接自己的 OpenAI、DeepSeek 或兼容 API</dd></div>
+              </dl>
+              <div className="case-system" aria-label="产品方案">
+                <article><span>01 · UNDERSTAND</span><h4>先把论文讲明白</h4><p>结构化呈现研究问题、背景、方法、结论、局限性和术语对照，减少反复翻译与摘录。</p></article>
+                <article><span>02 · EXECUTE</span><h4>再把步骤拆具体</h4><p>每个实验步骤继续拆成理解概念、判断起点、寻找资源、跟着做和检查结果。</p></article>
+                <article><span>03 · ASK</span><h4>卡住就随时追问</h4><p>问题优先于页面上下文；即使停在步骤一，询问步骤二时也会自动切换正确回答范围。</p></article>
+              </div>
+              <div className="case-results literature-results" aria-label="当前产品能力">
+                <div><strong>10 个步骤</strong><span>示例论文的完整实验执行清单</span></div>
+                <div><strong>5 阶段向导</strong><span>从术语理解到结果检查</span></div>
+                <div><strong>多模型接入</strong><span>站点额度与用户自有 API 并存</span></div>
+              </div>
+            </section>
+            <section className="prototype-section literature-prototype" aria-labelledby="literature-prototype-title">
+              <div className="prototype-heading"><div><p className="case-kicker">产品预览</p><h3 id="literature-prototype-title">从读懂论文到真正知道下一步</h3></div><span>开源版本已包含完整交互原型 · 在线 AI 服务接入中</span></div>
+              <div className="literature-showcase">
+                <aside><div className="showcase-brand"><i>LF</i><span><strong>文献实验助手</strong><small>英文文献 → 中文解析 → 实验步骤</small></span></div><button>＋ 新增文献</button><div className="showcase-paper"><span>IS</span><p>优化 IS621 重组酶/桥接 RNA…<small>10 个实验步骤</small></p></div></aside>
+                <div className="showcase-main"><div className="showcase-top"><span>游客体验 · 2 / 5</span><b>API 设置</b></div><p className="showcase-kicker">LITERATURE ANALYSIS</p><h4>优化 IS621 重组酶/桥接 RNA 介导的重组以精准插入人类细胞大片段 DNA</h4><nav><strong>文献解析</strong><span>实验步骤（10）</span></nav><section><div><small>研究背景</small><p>把论文背景、方法、结论与局限性翻译成清晰的中文结构化内容。</p></div><div><small>下一步怎么做</small><p>每一步继续拆成概念、材料来源、执行动作、质控与常见问题。</p></div></section><div className="showcase-chat">✦ <span><strong>问问 AI</strong><small>哪里不懂就问哪里</small></span></div></div>
+              </div>
+              <div className="literature-project-actions"><a className="button button-primary" href={literatureAssistantRepo} target="_blank" rel="noreferrer">查看 GitHub 源码 ↗</a><span>在线体验地址将在后端与隐私设置完成后开放。</span></div>
             </section>
           </div>
         </div>
