@@ -232,7 +232,7 @@ export default function Home() {
             <section className="prototype-section literature-prototype" aria-labelledby="literature-prototype-title">
               <div className="prototype-heading"><div><p className="case-kicker">在线工具</p><h3 id="literature-prototype-title">在这里直接使用文献实验助手</h3></div><span>可以点击文献解析、实验步骤、新手向导、对话框和 API 设置</span></div>
               <div className="literature-live-frame"><iframe src={literatureAssistantLive} title="LitFlow 文献实验助手" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"/></div>
-              <div className="literature-project-actions"><div><a className="button button-primary" href={literatureAssistantLive} target="_blank" rel="noreferrer">全屏打开工具 ↗</a><a className="button button-secondary" href={literatureAssistantRepo} target="_blank" rel="noreferrer">查看 GitHub 源码</a></div><span>当前在线版本可直接体验完整界面；AI 调用、登录和云端额度仍处于演示阶段。</span></div>
+              <div className="literature-project-actions"><div><a className="button button-primary" href={literatureAssistantLive} target="_blank" rel="noreferrer">全屏打开工具 ↗</a><a className="button button-secondary" href={literatureAssistantRepo} target="_blank" rel="noreferrer">查看 GitHub 源码</a></div><span>填写自己的 DeepSeek 或 OpenAI API Key 后可实时对话；示例论文解析、登录和站点公共额度仍处于演示阶段。</span></div>
             </section>
           </div>
         </div>
