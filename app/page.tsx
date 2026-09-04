@@ -5,6 +5,7 @@ import WatercolorWorld from "./components/WatercolorWorld";
 
 const originalSite = "https://yvanzi.com";
 const literatureAssistantRepo = "https://github.com/yuan1177775-afk/litflow-literature-assistant";
+const literatureAssistantLive = "https://litflow-research-assistant.yuan1177775.chatgpt.site";
 
 const nowItems = [
   {
@@ -229,12 +230,9 @@ export default function Home() {
               </div>
             </section>
             <section className="prototype-section literature-prototype" aria-labelledby="literature-prototype-title">
-              <div className="prototype-heading"><div><p className="case-kicker">产品预览</p><h3 id="literature-prototype-title">从读懂论文到真正知道下一步</h3></div><span>开源版本已包含完整交互原型 · 在线 AI 服务接入中</span></div>
-              <div className="literature-showcase">
-                <aside><div className="showcase-brand"><i>LF</i><span><strong>文献实验助手</strong><small>英文文献 → 中文解析 → 实验步骤</small></span></div><button>＋ 新增文献</button><div className="showcase-paper"><span>IS</span><p>优化 IS621 重组酶/桥接 RNA…<small>10 个实验步骤</small></p></div></aside>
-                <div className="showcase-main"><div className="showcase-top"><span>游客体验 · 2 / 5</span><b>API 设置</b></div><p className="showcase-kicker">LITERATURE ANALYSIS</p><h4>优化 IS621 重组酶/桥接 RNA 介导的重组以精准插入人类细胞大片段 DNA</h4><nav><strong>文献解析</strong><span>实验步骤（10）</span></nav><section><div><small>研究背景</small><p>把论文背景、方法、结论与局限性翻译成清晰的中文结构化内容。</p></div><div><small>下一步怎么做</small><p>每一步继续拆成概念、材料来源、执行动作、质控与常见问题。</p></div></section><div className="showcase-chat">✦ <span><strong>问问 AI</strong><small>哪里不懂就问哪里</small></span></div></div>
-              </div>
-              <div className="literature-project-actions"><a className="button button-primary" href={literatureAssistantRepo} target="_blank" rel="noreferrer">查看 GitHub 源码 ↗</a><span>在线体验地址将在后端与隐私设置完成后开放。</span></div>
+              <div className="prototype-heading"><div><p className="case-kicker">在线工具</p><h3 id="literature-prototype-title">在这里直接使用文献实验助手</h3></div><span>可以点击文献解析、实验步骤、新手向导、对话框和 API 设置</span></div>
+              <div className="literature-live-frame"><iframe src={literatureAssistantLive} title="LitFlow 文献实验助手" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"/></div>
+              <div className="literature-project-actions"><div><a className="button button-primary" href={literatureAssistantLive} target="_blank" rel="noreferrer">全屏打开工具 ↗</a><a className="button button-secondary" href={literatureAssistantRepo} target="_blank" rel="noreferrer">查看 GitHub 源码</a></div><span>当前在线版本可直接体验完整界面；AI 调用、登录和云端额度仍处于演示阶段。</span></div>
             </section>
           </div>
         </div>
