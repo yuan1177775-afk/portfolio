@@ -101,6 +101,10 @@ export default function Home() {
       <section className="work section clean-section" id="work">
         <div className="section-heading reveal visible"><p className="section-mark">02 · SELECTED WORK</p><h2>精选项目</h2><p className="section-claim">从问题出发，<br/>让方案走向真实场景。</p><p className="body-copy">这里收录我参与和主导的 AI 产品项目，记录从需求发现、方案设计到验证迭代的完整过程。</p></div>
         <div className="project-grid">
+          <a className="project-card reveal visible" href="#literature-assistant-project" aria-label="打开文献实验助手并直接使用">
+            <div className="project-cover cover-literature"><span className="cover-index">CASE 04 · 可在线使用</span><div className="literature-cover-ui"><div className="literature-cover-side"><i/><i/><i/></div><div className="literature-cover-page"><span>LIVE TOOL</span><strong>文献 → 方法 → 实验</strong><i/><i/><button>立即使用</button></div></div></div>
+            <div className="project-content"><div className="project-topline"><span>AI 科研工具</span><time>已上线</time></div><h3>LitFlow · 文献实验助手</h3><p>面向跨专业研究生，把英文论文转成中文深度解析、实验执行清单和新手分步向导，并允许围绕当前文献随时追问。</p><ul className="project-tags"><li>文献解析</li><li>实验工作流</li><li>上下文对话</li><li>BYOK</li></ul><div className="project-footer"><span>点击后可直接在本站操作</span><strong>立即使用工具 →</strong></div></div>
+          </a>
           <a className="project-card reveal visible" href="#school-project" aria-label="打开考研择校择专业 AI 顾问项目与 Demo">
             <div className="project-cover cover-education"><span className="cover-index">CASE 01</span><div className="cover-window"><i/><i/><i/><strong>AI ADVISOR</strong></div></div>
             <div className="project-content"><div className="project-topline"><span>AI 产品项目</span><time>2024 年 9 月</time></div><h3>考研择校择专业 AI 顾问</h3><p>用“规则引擎 + RAG + LLM”把顾问经验产品化，通过多轮追问，为管综 199 考生生成冲刺、稳妥、保底的个性化择校方案。</p><ul className="project-tags"><li>多轮对话</li><li>RAG</li><li>规则引擎</li><li>Bad Case</li></ul><div className="project-footer"><span>角色：AI 产品经理 · 管综199</span><strong>体验 Demo →</strong></div></div>
@@ -112,10 +116,6 @@ export default function Home() {
           <a className="project-card reveal visible" href={`${originalSite}/demos/nantu/`} target="_blank" rel="noreferrer" aria-label="打开馕途新疆深度旅行规划 Demo">
             <div className="project-cover cover-lab"><span className="cover-index">CASE 03</span><div className="cover-grid"><i/><i/><i/><i/></div></div>
             <div className="project-content"><div className="project-topline"><span>AI Demo</span><time>Vibe Coding</time></div><h3>馕途 · 新疆深度旅行规划</h3><p>一站式新疆旅行规划原型，涵盖路线推荐、景点攻略、美食住宿与季节玩法，用 vibe coding 快速验证 AI 旅行助手体验。</p><ul className="project-tags"><li>AI 原型</li><li>旅行规划</li><li>交互 Demo</li></ul><div className="project-footer"><span>角色：独立探索</span><strong>体验 Demo →</strong></div></div>
-          </a>
-          <a className="project-card reveal visible" href="#literature-assistant-project" aria-label="打开文献实验助手项目介绍与 Demo">
-            <div className="project-cover cover-literature"><span className="cover-index">CASE 04</span><div className="literature-cover-ui"><div className="literature-cover-side"><i/><i/><i/></div><div className="literature-cover-page"><span>RESEARCH</span><strong>文献 → 方法 → 实验</strong><i/><i/><button>问问 AI</button></div></div></div>
-            <div className="project-content"><div className="project-topline"><span>AI 科研工具</span><time>原型验证中</time></div><h3>LitFlow · 文献实验助手</h3><p>面向跨专业研究生，把英文论文转成中文深度解析、实验执行清单和新手分步向导，并允许围绕当前文献随时追问。</p><ul className="project-tags"><li>文献解析</li><li>实验工作流</li><li>上下文对话</li><li>BYOK</li></ul><div className="project-footer"><span>角色：产品设计 · 独立开发</span><strong>查看项目 →</strong></div></div>
           </a>
         </div>
       </section>
